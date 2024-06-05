@@ -1,0 +1,38 @@
+2024-06-05 18:47:14,827 - ERROR - Exception encountered in class ModelHandler of method initialize_client: 'dict' object has no attribute 'to_json'
+2024-06-05 18:47:35,864 - ERROR - Exception encountered in class ModelHandler of method initialize_client: 'dict' object has no attribute 'to_json'
+2024-06-05 18:48:44,620 - ERROR - Exception encountered in class ModelHandler of method initialize_client: 'dict' object has no attribute 'to_json'
+2024-06-05 18:59:19,625 - ERROR - Exception encountered in class ModelHandler of method initialize_client: 'dict' object has no attribute 'to_json'
+2024-06-05 18:59:19,625 - DEBUG - Response received: 
+2024-06-05 18:59:30,534 - ERROR - Exception encountered in class ModelHandler of method initialize_client: 'dict' object has no attribute 'to_json'
+2024-06-05 18:59:30,534 - DEBUG - Response received: 
+2024-06-05 19:00:55,788 - DEBUG - Response received: 
+2024-06-05 19:01:09,941 - DEBUG - Response received: 
+2024-06-05 19:01:46,922 - DEBUG - Response received: 
+2024-06-05 19:04:10,476 - ERROR - Exception encountered in class ModelHandler of method get_response: Connection error.
+2024-06-05 19:04:18,073 - DEBUG - Response received: 
+2024-06-05 19:06:15,917 - DEBUG - Response received: 
+2024-06-05 19:06:43,809 - ERROR - Exception encountered in class ModelHandler of method get_response: Connection error.
+2024-06-05 19:17:02,167 - DEBUG - Response received: 
+2024-06-05 19:17:08,344 - ERROR - Exception encountered in class ModelHandler of method get_response: Connection error.
+2024-06-05 19:17:57,361 - DEBUG - Response received: 
+2024-06-05 19:23:11,614 - WARNING - No message pojo or / and client initialized. Cannot obtain response.
+2024-06-05 19:23:11,614 - DEBUG - Response received: 
+2024-06-05 19:23:18,992 - ERROR - Exception encountered in class ModelHandler of method get_response: Connection error.
+2024-06-05 19:23:37,108 - DEBUG - Response received: 
+2024-06-05 19:24:25,199 - WARNING - No message pojo or / and client initialized. Cannot obtain response.
+2024-06-05 19:24:25,199 - DEBUG - Response received: 
+2024-06-05 19:24:32,114 - ERROR - Exception encountered in class ModelHandler of method get_response: Error code: 404 - {'error': {'code': 'DeploymentNotFound', 'message': 'The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.'}}
+2024-06-05 19:24:51,269 - DEBUG - Response received: 
+2024-06-05 19:25:32,174 - ERROR - Exception encountered in class ModelHandler of method get_response: Connection error.
+2024-06-05 19:25:48,463 - DEBUG - Response received: 
+2024-06-05 19:25:53,132 - ERROR - Exception encountered in class ModelHandler of method get_response: Error code: 400 - {'error': {'code': 400, 'message': "The request model 'completions' is not available for this event. Available models are: gpt-35-turbo-16k, gpt-35-turbo, text-embedding-3-small, gpt-4-vision, text-embedding-ada-002, gpt-4-32k, gpt-4"}}
+2024-06-05 19:26:33,466 - DEBUG - Response received: 
+2024-06-05 19:27:24,983 - DEBUG - Response received: Of course! I'd be happy to help. To get started, could you please tell me a little bit more about your needs? Here are some questions to consider:
+
+1. What is your skill level? Are you a beginner, intermediate, or advanced rider?
+2. What type of riding will you be doing most - off-road (mountain bike), commuting in the city, racing (road bike), or a little bit of everything (hybrid bike)?
+3. Do you have a preference for men's or women's bikes, or does it not matter?
+4. What is your height? Since bicycles come in different sizes, this helps in finding a bike that would fit you comfortably.
+5. Is there a particular budget range you wish to stick to?
+
+Feel free to answer all or some of these questions; they'll help us narrow down your options.
