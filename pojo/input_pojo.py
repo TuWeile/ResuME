@@ -11,6 +11,7 @@ class InputPojo:
         self.messages: list[dict] = [{}]
 
         self.client_exists: bool = False
+        self.db_exists: bool = False
         self.last_message: str = ""
 
     def to_json(self):
