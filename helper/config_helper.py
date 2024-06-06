@@ -30,6 +30,8 @@ class ConfigHelper:
         return configuration
 
     def get_value(self, parameter: str = "", option: Optional[str] = None):
+        class_name = self.__class__.__name__
+        method_name = inspect.currentframe().f_code.co_name
         result = ""
 
         try:
@@ -42,14 +44,14 @@ class ConfigHelper:
                 self.logger.warning("Missing configuration file from self.config; please ensure config file is read!")
 
         except Exception as bad_exception:
-            class_name = self.__class__.__name__
-            method_name = inspect.currentframe().f_code.co_name
             self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: {bad_exception}")
 
         finally:
             return result
 
     def get_boolean(self, parameter: str = "", option: Optional[str] = None):
+        class_name = self.__class__.__name__
+        method_name = inspect.currentframe().f_code.co_name
         result = False
 
         try:
@@ -62,14 +64,14 @@ class ConfigHelper:
                 self.logger.warning("Missing configuration file from self.config; please ensure config file is read!")
 
         except Exception as bad_exception:
-            class_name = self.__class__.__name__
-            method_name = inspect.currentframe().f_code.co_name
             self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: {bad_exception}")
 
         finally:
             return result
 
     def get_int(self, parameter: str = "", option: Optional[str] = None):
+        class_name = self.__class__.__name__
+        method_name = inspect.currentframe().f_code.co_name
         result = 0
 
         try:
@@ -82,8 +84,6 @@ class ConfigHelper:
                 self.logger.warning("Missing configuration file from self.config; please ensure config file is read!")
 
         except Exception as bad_exception:
-            class_name = self.__class__.__name__
-            method_name = inspect.currentframe().f_code.co_name
             self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: {bad_exception}")
 
         finally:

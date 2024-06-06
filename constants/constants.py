@@ -1,0 +1,19 @@
+from enum import Enum, auto
+
+
+class TASK_CONST(Enum):
+    CONNECT = auto()
+    DATABASE = auto()
+
+
+class SUBTASK_CONST(Enum):
+    CLIENT = auto()
+    RESPONSE = auto()
+
+
+class SUBTASK_DB_CONST(Enum):
+    CREATE = auto()
+
+
+class MODEL_CONST(Enum):
+    GPT4 = "gpt-4"

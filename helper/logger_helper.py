@@ -18,7 +18,12 @@ class LoggerHelper:
         if not self.logger.handlers:
             formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
-            file_handler = logging.FileHandler(logfile_path)
+            try:
+                file_handler = logging.FileHandler(logfile_path)
+            except FileNotFoundError as e:
+                print(f"Discrepancy detected in filepath. Calibrating to existing file directory...")
+                file_handler = logging.FileHandler(logfile_path[1:])
+
             file_handler.setLevel(logging.DEBUG)
             file_handler.setFormatter(formatter)
 
