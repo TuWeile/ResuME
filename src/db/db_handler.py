@@ -1,5 +1,6 @@
 import inspect
 
+import certifi
 import pymongo
 
 from constants.constants import SUBTASK_CONST, SUBTASK_DB_CONST
@@ -34,7 +35,7 @@ class DBHandler(BaseHandler):
             if self.auth:
                 authy = self.auth.to_json()
 
-                self.client = pymongo.MongoClient(authy.get("db_form", ""))
+                self.client = pymongo.MongoClient(authy.get("db_form", ""), tlsCAFile=certifi.where())
                 status = self.client_pre_scrap_actions()
 
                 if status:
@@ -101,9 +102,13 @@ class DBHandler(BaseHandler):
             elif subtask == SUBTASK_DB_CONST.CREATE:
                 self.logger.info(f"Class {class_name} of method {method_name}: {subtask} determined. "
                                  f"Initializing methods.")
-                result = self.db_helper.create_one_document(self.message.document)
+                result = self.db_helper.create_one_document(self.message.documents)
                 self.message.subtask_completed = True
                 return result
 
         except Exception as bad_exception:
             self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: {bad_exception}")
+
+        finally:
+            self.client.drop_database("cosmic_works")
+            self.client.close()

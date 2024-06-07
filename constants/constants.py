@@ -13,6 +13,10 @@ class SUBTASK_CONST(Enum):
 
 class SUBTASK_DB_CONST(Enum):
     CREATE = auto()
+    READ = auto()
+    UPDATE = auto()
+    DELETE = auto()
+    Q_MULTI = auto()
 
 
 class MODEL_CONST(Enum):

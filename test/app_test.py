@@ -102,10 +102,25 @@ class MyTestCase(unittest.TestCase):
         self.message.documents.append(test_user)
         self.message.role.task = TASK_CONST.DATABASE
         self.message.role.subtask = SUBTASK_DB_CONST.CREATE
-        # status = AppHandler(authy, self.message).main()
 
-        self.assertEqual(True, True)
+        self.message.task_completed = False
+        self.message.subtask_completed = False
 
+        status = AppHandler(authy, self.message).main()
+
+        self.assertEqual(status, True)
+
+    def test_read_document_fro_db(self):
+        pass
+
+    def test_update_document_to_db(self):
+        pass
+
+    def test_delete_document_fro_db(self):
+        pass
+
+    def test_query_multiple_documents_db(self):
+        pass
 
 
 if __name__ == '__main__':
