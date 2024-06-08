@@ -552,6 +552,82 @@ class MyTestCase(unittest.TestCase):
         else:
             self.fail(f"Status fails true condition, value is {status}")
 
+    def test_connect_to_langchain(self):
+        authy = AuthPojo(self.config)
+
+        self.message.role.model = TEST_PROD_CONST.COMPLETIONS
+        self.message.role.embeddings = TEST_PROD_CONST.EMBEDDINGS
+        self.message.role.task = TASK_CONST.LANGCHAIN
+        self.message.role.subtask = SUBTASK_CONST.CLIENT
+
+        self.message.task_completed = False
+        self.message.subtask_completed = False
+
+        status = AppHandler(authy, self.message).main()
+
+        if not self.message.done:
+            self.fail(f"The task was not completed with self.message.done declared as {self.message.done}")
+
+        self.assertEqual(self.message.langchain_exists, True, "Connection to LangChain model flagged as False.")
+
+    def test_connect_to_langchain_vector_store(self):
+        authy = AuthPojo(self.config)
+
+        self.message.role.model = TEST_PROD_CONST.COMPLETIONS
+        self.message.role.embeddings = TEST_PROD_CONST.EMBEDDINGS
+        self.message.role.task = TASK_CONST.LANGCHAIN
+        self.message.role.subtask = SUBTASK_EMBED_CONST.SEARCH
+
+        self.message.task_completed = False
+        self.message.subtask_completed = False
+
+        self.message.query = "Introduce yourself."
+        self.message.k_search_value = 3
+
+        status = AppHandler(authy, self.message).main()
+
+        if not self.message.done:
+            self.fail(f"The task was not completed with self.message.done declared as {self.message.done}")
+
+        if status:
+            self.assertIsInstance(status, list, "Embeddings received is not in list.")
+
+        else:
+            self.fail(f"Status fails true condition, value is {status}")
+
+    def test_create_response_with_context_langchain(self):
+        authy = AuthPojo(self.config)
+
+        self.message.role.model = TEST_PROD_CONST.COMPLETIONS
+        self.message.role.embeddings = TEST_PROD_CONST.EMBEDDINGS
+        self.message.role.task = TASK_CONST.LANGCHAIN
+        self.message.role.subtask = SUBTASK_CONST.RESPONSE_CONTEXT
+
+        self.message.task_completed = False
+        self.message.subtask_completed = False
+
+        self.message.prompt = """
+        You are a helpful, fun and friendly assistant emulating a person who is applying for a job.
+        You are designed to answer questions as to what a human interviewer would reasonably ask you.
+        Refrain from speaking in a third-person perspective and do not respond with anything that implies that you are 
+        an emulated assistant.
+
+        Only answer questions related to the information provided below that are represented in JSON format.
+
+        If you are asked a question that is not in the list, respond with "I don't know, but you can e-mail the 
+        human version of me for more information!" or its equivalent.
+
+        Information:
+        """
+
+        self.message.query = "Introduce yourself while telling me your address."
+        self.message.k_search_value = 3
+
+        status = AppHandler(authy, self.message).main()
+
+        if not self.message.done:
+            self.fail(f"The task was not completed with self.message.done declared as {self.message.done}")
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -4,6 +4,7 @@ from enum import Enum, auto
 class TASK_CONST(Enum):
     CONNECT = auto()
     DATABASE = auto()
+    LANGCHAIN = auto()
 
 
 class SUBTASK_CONST(Enum):

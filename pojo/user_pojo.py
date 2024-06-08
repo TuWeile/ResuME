@@ -77,6 +77,9 @@ class User(BaseModel):
     strengths: Optional[str] = None
     weaknesses: Optional[str] = None
     attachments: Optional[List[Attachment]] = None
+    linkedin: Optional[str] = None
+    website: Optional[str] = None
+    skills: Optional[str] = None
     created_at: int
     deleted_by: int
 
@@ -96,6 +99,9 @@ class UserUpdateSearch(BaseModel):
     strengths: Optional[str] = None
     weaknesses: Optional[str] = None
     attachments: Optional[List[Attachment]] = None
+    linkedin: Optional[str] = None
+    website: Optional[str] = None
+    skills: Optional[str] = None
     # created_at: Optional[int]
     # deleted_by: Optional[int]
 

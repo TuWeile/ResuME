@@ -7,6 +7,7 @@ from pojo.input_pojo import InputPojo
 from pojo.purpose_pojo import PurposePojo
 from src.app.base_handler import BaseHandler
 from src.db.db_handler import DBHandler
+from src.models.langchain_handler import LangchainHandler
 from src.models.model_handler import ModelHandler
 
 
@@ -39,6 +40,11 @@ class TaskFactory(BaseHandler):
                     self.logger.info(f"Class {class_name} of method {method_name}: {task} determined. "
                                      f"Declaring DBHandler class.")
                     return DBHandler(self.auth, self.message)
+
+                elif task == TASK_CONST.LANGCHAIN:
+                    self.logger.info(f"Class {class_name} of method {method_name}: {task} determined. "
+                                     f"Declaring DBHandler class.")
+                    return LangchainHandler(self.auth, self.message)
 
                 else:
                     raise Exception(f"Unable to find valid task class with {task}")
