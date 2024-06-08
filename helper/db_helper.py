@@ -1,19 +1,23 @@
 import inspect
+import json
 
 import pymongo
+from bson import ObjectId
 
 from decorators.decorators import Singleton
 
 from helper.common_helper import CommonHelper
 from helper.logger_helper import LoggerHelper
 
-from pojo.input_pojo import ReadIdPojo
+from pojo.input_pojo import ReadIdPojo, VectorIndexPojo
 from pojo.user_pojo import User
 from pydantic import BaseModel
 from pymongo.collection import Collection
 from pymongo.database import Database
 from pymongo.mongo_client import MongoClient
 from typing import Type, List
+
+from src.models.model_handler import ModelHandler
 
 
 @Singleton
@@ -207,3 +211,104 @@ class DBHelper:
         except Exception as bad_exception:
             self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: "
                               f"{bad_exception}")
+
+    def vectorize_and_update_documents(self, client: ModelHandler = None):
+        class_name = self.__class__.__name__
+        method_name = inspect.currentframe().f_code.co_name
+        result = False
+        temp = list()
+
+        try:
+            if client:
+                for doc in self.collection.find():
+                    # Remove any previous contentVector embeddings
+                    if "contentVector" in doc:
+                        del doc["contentVector"]
+
+                    content = json.dumps(doc, default=str)
+                    content_vector = client.generate_embeddings(message=content)
+
+                    read = ReadIdPojo()
+                    read._id = ObjectId(doc["_id"])
+                    read.set["$set"] = {"contentVector": content_vector}
+
+                    temp.append(pymongo.UpdateOne({"_id": read._id}, read.set, upsert=True))
+
+                self.collection.bulk_write(temp)
+                result = True
+
+            else:
+                self.logger.warning(f"Class {class_name} of method {method_name}: Unable to obtain client.")
+
+        except Exception as bad_exception:
+            self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: "
+                              f"{bad_exception}")
+
+        finally:
+            return result
+
+    def create_vector_index(self, vector_index: VectorIndexPojo = None):
+        class_name = self.__class__.__name__
+        method_name = inspect.currentframe().f_code.co_name
+        result = False
+
+        try:
+            if vector_index:
+                entry = vector_index.to_json()
+
+                self.db.command(entry)
+                result = True
+
+            else:
+                self.logger.warning(f"Class {class_name} of method {method_name}: Vector index is empty.")
+
+        except Exception as bad_exception:
+            self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: "
+                              f"{bad_exception}")
+
+        finally:
+            return result
+
+    def vector_search(self, client: ModelHandler = None, query: str = "", num_results: int = 3):
+        """
+        Perform a vector search on the specified collection by vectorizing
+        the query and searching the vector index for the most similar documents.
+
+        returns a list of the top num_results most similar documents
+        """
+        class_name = self.__class__.__name__
+        method_name = inspect.currentframe().f_code.co_name
+        result = None
+
+        try:
+            if client and query:
+                query_embedding = client.generate_embeddings(message=query)
+
+                # FIXME: Could be better phrased into a POJO class in input_pojo.py.
+                pipeline = [
+                    {
+                        '$search': {
+                            "cosmosSearch": {
+                                "vector": query_embedding,
+                                "path": "contentVector",
+                                "k": num_results
+                            },
+                            "returnStoredSource": True}},
+                    {'$project': {'similarityScore': {'$meta': 'searchScore'}, 'document': '$$ROOT'}}
+                ]
+
+                result = self.collection.aggregate(pipeline)
+
+            elif not client:
+                self.logger.warning(f"Class {class_name} of method {method_name}: Unable to obtain client.")
+
+            elif not query:
+                self.logger.warning(f"Class {class_name} of method {method_name}: Empty query.")
+
+        except Exception as bad_exception:
+            self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: "
+                              f"{bad_exception}")
+
+        finally:
+            return result
+

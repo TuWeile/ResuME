@@ -9,6 +9,7 @@ class TASK_CONST(Enum):
 class SUBTASK_CONST(Enum):
     CLIENT = auto()
     RESPONSE = auto()
+    RESPONSE_CONTEXT = auto()
 
 
 class SUBTASK_DB_CONST(Enum):
@@ -19,6 +20,13 @@ class SUBTASK_DB_CONST(Enum):
     FILTER = auto()
 
 
+class SUBTASK_EMBED_CONST(Enum):
+    GENERATE = auto()
+    VECTORIZE_UPDATE = auto()
+    CREATE_INDEX = auto()
+    SEARCH = auto()
+
+
 class MODEL_CONST(Enum):
     GPT4 = "gpt-4"
     GPT35_TURBO = "gpt-35-turbo"
@@ -27,3 +35,8 @@ class MODEL_CONST(Enum):
 class TEST_PROD_CONST(Enum):
     COMPLETIONS = "completions"
     EMBEDDINGS = "embeddings"
+
+
+class FLAG_CONST(Enum):
+    INIT_CLIENT = auto()
+    INIT_DATABASE = auto()
