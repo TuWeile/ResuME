@@ -56,7 +56,8 @@ class MyTestCase(unittest.TestCase):
 
         Steps:
         - Initializes the authentication object.
-        - Configures the message object to use the GPT-4 model and sets up the task and subtask for connecting to the client.
+        - Configures the message object to use the GPT-4 model and sets up the task and subtask for connecting to the
+        client.
         - Executes the connection process and checks if the task completes successfully.
         - Asserts that the `client_exists` flag is set to True, verifying a successful connection.
 
@@ -129,7 +130,8 @@ class MyTestCase(unittest.TestCase):
         Steps:
         - Initializes the authentication object.
         - Configures the message object for a database connection task and executes the connection process.
-        - Checks if the task completes and verifies that the `db_exists` flag is set to True, indicating a successful connection.
+        - Checks if the task completes and verifies that the `db_exists` flag is set to True, indicating a successful
+        connection.
 
         Asserts:
         - The task is marked as completed.
@@ -154,7 +156,8 @@ class MyTestCase(unittest.TestCase):
         Steps:
         - Initializes the authentication object and appends a test user document to the message.
         - Configures and executes the document creation task in the database.
-        - Checks if the task completes and verifies that the returned status is an instance of ObjectId, confirming document creation.
+        - Checks if the task completes and verifies that the returned status is an instance of ObjectId, confirming
+        document creation.
 
         Asserts:
         - The task is marked as completed.
@@ -186,7 +189,8 @@ class MyTestCase(unittest.TestCase):
         Steps:
         - Initializes the authentication object and sets up the ID for the document to be read.
         - Configures and executes the task to read a document from the database.
-        - Checks if the task completes and verifies that the returned status is an instance of User, confirming successful document retrieval.
+        - Checks if the task completes and verifies that the returned status is an instance of User, confirming
+        successful document retrieval.
 
         Asserts:
         - The task is marked as completed.
@@ -196,7 +200,7 @@ class MyTestCase(unittest.TestCase):
         authy = AuthPojo(self.config)
         read_obj = ReadIdPojo()
 
-        read_obj._id = ObjectId("6662786b720a7fea8f2df4f1")  # or change this value to something that you can find in your own chromoDB
+        read_obj._id = ObjectId("6662786b720a7fea8f2df4f1")  # or change this value to an existing objectID in coll
 
         self.message.read_ids.append(read_obj)
         self.message.role.task = TASK_CONST.DATABASE
@@ -493,13 +497,17 @@ class MyTestCase(unittest.TestCase):
         - Initializes the authentication object and configures the messaging parameters to simulate a response
         generation task. The role is set to handle both completions and embeddings, with a specific subtask to
         generate a context-aware response.
-        - Sets a complex prompt designed to make the assistant act like a job applicant, answering interview questions directly without acknowledging its artificial nature. The prompt includes instructions to respond with a default message if the query is out of scope.
+        - Sets a complex prompt designed to make the assistant act like a job applicant, answering interview questions
+        directly without acknowledging its artificial nature. The prompt includes instructions to respond with a
+        default message if the query is out of scope.
         - Executes the task with a query asking "Tell me about yourself." and checks for successful completion.
-        - Verifies that the returned status is an instance of `ChatCompletion`, ensuring that the response is appropriately generated according to the context set in the prompt.
+        - Verifies that the returned status is an instance of `ChatCompletion`, ensuring that the response is
+        appropriately generated according to the context set in the prompt.
 
         Asserts:
         - The task is marked as completed.
-        - The status is an instance of `ChatCompletion`, confirming that the response aligns with the requirements of the context-aware setup.
+        - The status is an instance of `ChatCompletion`, confirming that the response aligns with the requirements of
+        the context-aware setup.
         - The response text is logged for debugging purposes.
         """
 
@@ -543,6 +551,7 @@ class MyTestCase(unittest.TestCase):
 
         else:
             self.fail(f"Status fails true condition, value is {status}")
+
 
 if __name__ == '__main__':
     unittest.main()
