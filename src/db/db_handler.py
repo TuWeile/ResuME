@@ -1,9 +1,10 @@
 import inspect
+from typing import Optional
 
 import certifi
 import pymongo
 
-from constants.constants import SUBTASK_CONST, SUBTASK_DB_CONST
+from constants.constants import SUBTASK_CONST, SUBTASK_DB_CONST, SUBTASK_EMBED_CONST, FLAG_CONST, TASK_CONST
 from helper.db_helper import DBHelper
 from pojo.auth_pojo import AuthPojo
 from pojo.input_pojo import InputPojo
@@ -67,8 +68,11 @@ class DBHandler(BaseHandler):
 
         try:
             if self.client:
-                self.db = self.client.cosmic_works
-                self.collection = self.db.products
+                db_name = self.message.database_name
+                collection_name = self.message.collection_name
+
+                self.db = self.client[db_name]
+                self.collection = self.db[collection_name]
 
                 self.logger.info(f"Class {class_name} of method {method_name} successfully executed.")
                 success = True
@@ -82,7 +86,7 @@ class DBHandler(BaseHandler):
         finally:
             return success
 
-    def main(self):
+    def main(self, attachments=None):
         class_name = self.__class__.__name__
         method_name = inspect.currentframe().f_code.co_name
         result = None
@@ -129,9 +133,59 @@ class DBHandler(BaseHandler):
                 result = self.db_helper.find_documents(self.message.read_ids)
                 self.message.subtask_completed = True
 
+            elif subtask == SUBTASK_EMBED_CONST.VECTORIZE_UPDATE:
+                self.logger.info(f"Class {class_name} of method {method_name}: {subtask} determined. "
+                                 f"Initializing methods.")
+
+                if self.message.client_exists:
+                    self.logger.info(f"Class {class_name} of method {method_name}: {subtask} determined. "
+                                     f"OpenAI Client initialized. Initializing methods.")
+
+                    result = self.db_helper.vectorize_and_update_documents(client=attachments)
+                    self.message.subtask_completed = True
+
+                else:
+                    self.logger.info(f"Class {class_name} of method {method_name}: {subtask} determined. "
+                                     f"OpenAI Client not initialized. Initializing.")
+
+                    self.message.role.flag = FLAG_CONST.INIT_CLIENT
+                    self.helper.adjust_tasking(message=self.message,
+                                               task=TASK_CONST.CONNECT,
+                                               subtask=SUBTASK_CONST.CLIENT,
+                                               revert=False)
+
+            elif subtask == SUBTASK_EMBED_CONST.CREATE_INDEX:
+                self.logger.info(f"Class {class_name} of method {method_name}: {subtask} determined. "
+                                 f"Initializing methods.")
+                result = self.db_helper.create_vector_index(self.message.vector_index)
+                self.message.subtask_completed = True
+
+            elif subtask in [SUBTASK_EMBED_CONST.SEARCH, SUBTASK_CONST.RESPONSE_CONTEXT]:
+                self.logger.info(f"Class {class_name} of method {method_name}: {subtask} determined. "
+                                 f"Initializing methods.")
+
+                if self.message.client_exists:
+                    self.logger.info(f"Class {class_name} of method {method_name}: {subtask} determined. "
+                                     f"OpenAI Client initialized. Initializing methods.")
+
+                    result = self.db_helper.vector_search(client=attachments,
+                                                          query=self.message.query,
+                                                          num_results=self.message.k_search_value)
+                    self.message.subtask_completed = True
+
+                else:
+                    self.logger.info(f"Class {class_name} of method {method_name}: {subtask} determined. "
+                                     f"OpenAI Client not initialized. Initializing.")
+
+                    self.message.role.flag = FLAG_CONST.INIT_CLIENT
+                    self.helper.adjust_tasking(message=self.message,
+                                               task=TASK_CONST.CONNECT,
+                                               subtask=SUBTASK_CONST.CLIENT,
+                                               revert=False)
+
             else:
                 self.logger.warning(f"Class {class_name} of method {method_name}: {subtask} determined. "
-                                    f"Unable to determine correct subtasking. Failing.")
+                                    f"Unable to determine correct sub-tasking. Failing.")
                 self.message.subtask_completed = True
 
         except Exception as bad_exception:
