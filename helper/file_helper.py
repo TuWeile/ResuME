@@ -15,6 +15,8 @@ class FileHelper:
         self.logger = LoggerHelper()
 
     def resolve_path(self, file_name: str, depth: int) -> str:
+        class_name = self.__class__.__name__
+        method_name = inspect.currentframe().f_code.co_name
         result = None
 
         try:
@@ -22,8 +24,6 @@ class FileHelper:
             result = os.path.join(abs_filepath, file_name)
 
         except Exception as bad_exception:
-            class_name = self.__class__.__name__
-            method_name = inspect.currentframe().f_code.co_name
             self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: {bad_exception}")
 
         finally:
