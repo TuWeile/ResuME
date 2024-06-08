@@ -82,3 +82,22 @@ class User(BaseModel):
 
     class Config:
         allow_population_by_field_name = True
+
+
+class UserUpdateSearch(BaseModel):
+    # id: Optional[str] # = Field(alias="index_id")  // what does this do
+    personal_info: Optional[PersonalInfo] = None
+    experiences: Optional[List[Experience]] = None
+    educations: Optional[List[Education]] = None
+    projects: Optional[List[Project]] = None
+    certifications: Optional[List[Certification]] = None
+    biography: Optional[str] = None
+    motivations: Optional[str] = None
+    strengths: Optional[str] = None
+    weaknesses: Optional[str] = None
+    attachments: Optional[List[Attachment]] = None
+    # created_at: Optional[int]
+    # deleted_by: Optional[int]
+
+    class Config:
+        allow_population_by_field_name = True

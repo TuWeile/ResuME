@@ -34,7 +34,7 @@ class AppHandler(BaseHandler):
                 subtask_clause = self.message.role.subtask and not self.message.subtask_completed
 
             if self.message.task_completed and self.message.subtask_completed:
-                self.done = True
+                self.message.done = True
 
         except Exception as bad_exception:
             class_name = self.__class__.__name__
@@ -42,4 +42,4 @@ class AppHandler(BaseHandler):
             self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: {bad_exception}")
 
         finally:
-            return self.done
+            return result

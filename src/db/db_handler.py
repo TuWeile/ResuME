@@ -85,6 +85,7 @@ class DBHandler(BaseHandler):
     def main(self):
         class_name = self.__class__.__name__
         method_name = inspect.currentframe().f_code.co_name
+        result = None
 
         try:
             subtask = self.message.role.subtask
@@ -94,7 +95,6 @@ class DBHandler(BaseHandler):
                     self.logger.info(f"Class {class_name} of method {method_name}: {subtask} determined. "
                                      f"Declaring sub-task completed.")
                     self.message.subtask_completed = True
-                    return None
 
                 else:
                     raise Exception(f"No client found for {self.client}")
@@ -104,11 +104,40 @@ class DBHandler(BaseHandler):
                                  f"Initializing methods.")
                 result = self.db_helper.create_one_document(self.message.documents)
                 self.message.subtask_completed = True
-                return result
+            
+            elif subtask == SUBTASK_DB_CONST.READ:
+                self.logger.info(f"Class {class_name} of method {method_name}: {subtask} determined. "
+                                 f"Initializing methods.")
+                result = self.db_helper.read_one_document(self.message.read_ids)
+                self.message.subtask_completed = True
+
+            elif subtask == SUBTASK_DB_CONST.UPDATE:
+                self.logger.info(f"Class {class_name} of method {method_name}: {subtask} determined. "
+                                 f"Initializing methods.")
+                result = self.db_helper.update_one_document(self.message.read_ids)
+                self.message.subtask_completed = True
+            
+            elif subtask == SUBTASK_DB_CONST.DELETE:
+                self.logger.info(f"Class {class_name} of method {method_name}: {subtask} determined. "
+                                 f"Initializing methods.")
+                result = self.db_helper.delete_one_document(self.message.read_ids)
+                self.message.subtask_completed = True
+            
+            elif subtask == SUBTASK_DB_CONST.FILTER:
+                self.logger.info(f"Class {class_name} of method {method_name}: {subtask} determined. "
+                                 f"Initializing methods.")
+                result = self.db_helper.find_documents(self.message.read_ids)
+                self.message.subtask_completed = True
+
+            else:
+                self.logger.warning(f"Class {class_name} of method {method_name}: {subtask} determined. "
+                                    f"Unable to determine correct subtasking. Failing.")
+                self.message.subtask_completed = True
 
         except Exception as bad_exception:
             self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: {bad_exception}")
 
         finally:
-            self.client.drop_database("cosmic_works")
-            self.client.close()
+            return result
+        #     self.client.drop_database("cosmic_works")
+        #     self.client.close()

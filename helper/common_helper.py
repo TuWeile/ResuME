@@ -47,3 +47,16 @@ class CommonHelper:
         finally:
             return result
 
+    def dict_remove_null_values(self, input_dict: dict = None):
+        class_name = self.__class__.__name__
+        method_name = inspect.currentframe().f_code.co_name
+        result = None
+
+        try:
+            result = {k: v for k, v in input_dict.items() if v is not None}
+        
+        except Exception as bad_exception:
+            self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: {bad_exception}")
+        
+        finally:
+            return result

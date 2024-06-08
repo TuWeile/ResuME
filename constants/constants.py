@@ -16,8 +16,14 @@ class SUBTASK_DB_CONST(Enum):
     READ = auto()
     UPDATE = auto()
     DELETE = auto()
-    Q_MULTI = auto()
+    FILTER = auto()
 
 
 class MODEL_CONST(Enum):
     GPT4 = "gpt-4"
+    GPT35_TURBO = "gpt-35-turbo"
+
+
+class TEST_PROD_CONST(Enum):
+    COMPLETIONS = "completions"
+    EMBEDDINGS = "embeddings"
