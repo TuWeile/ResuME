@@ -71,7 +71,7 @@ class Behavioural(BaseModel):
 
 
 class User(BaseModel):
-    id: str # = Field(alias="index_id")  // what does this do
+    id: str  # = Field(alias="index_id")  // what does this do
     personal_info: PersonalInfo
     experiences: Optional[List[Experience]] = None
     educations: Optional[List[Education]] = None
