@@ -65,6 +65,11 @@ class Attachment(BaseModel):
     uploaded_at: datetime
 
 
+class Behavioural(BaseModel):
+    question: str
+    answer: str
+
+
 class User(BaseModel):
     id: str # = Field(alias="index_id")  // what does this do
     personal_info: PersonalInfo
@@ -77,6 +82,10 @@ class User(BaseModel):
     strengths: Optional[str] = None
     weaknesses: Optional[str] = None
     attachments: Optional[List[Attachment]] = None
+    linkedin: Optional[str] = None
+    website: Optional[str] = None
+    behavioural: Optional[List[Behavioural]] = None
+    skills: Optional[str] = None
     created_at: int
     deleted_by: int
 
@@ -96,6 +105,10 @@ class UserUpdateSearch(BaseModel):
     strengths: Optional[str] = None
     weaknesses: Optional[str] = None
     attachments: Optional[List[Attachment]] = None
+    linkedin: Optional[str] = None
+    website: Optional[str] = None
+    behavioural: Optional[List[Behavioural]] = None
+    skills: Optional[str] = None
     # created_at: Optional[int]
     # deleted_by: Optional[int]
 

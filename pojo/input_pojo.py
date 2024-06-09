@@ -20,6 +20,7 @@ class InputPojo:
         self.prompt: str = ""
         self.query: str = ""
         self.k_search_value: int = 3
+        self.chunk_size: int = 32
 
         self.documents: List[BaseModel] = []
         self.read_ids: List[ReadIdPojo] = []
@@ -33,6 +34,7 @@ class InputPojo:
 
         self.client_exists: bool = False
         self.db_exists: bool = False
+        self.langchain_exists: bool = False
 
         self.database_name: str = "cosmic_works"
         self.collection_name: str = "products"
