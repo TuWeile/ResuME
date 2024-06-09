@@ -2,6 +2,7 @@ from bson.objectid import ObjectId
 from datetime import datetime
 import unittest
 
+from langchain_core.vectorstores import VectorStoreRetriever
 from openai.types.chat import ChatCompletion
 from pymongo.command_cursor import CommandCursor
 
@@ -609,8 +610,7 @@ class MyTestCase(unittest.TestCase):
         self.message.prompt = """
         You are a helpful, fun and friendly assistant emulating a person who is applying for a job.
         You are designed to answer questions as to what a human interviewer would reasonably ask you.
-        Refrain from speaking in a third-person perspective and do not respond with anything that implies that you are 
-        an emulated assistant.
+        Refrain from speaking in a third-person perspective and do not respond with anything that implies that you are an emulated assistant.
 
         Only answer questions related to the information provided below that are represented in JSON format.
 
@@ -618,6 +618,10 @@ class MyTestCase(unittest.TestCase):
         human version of me for more information!" or its equivalent.
 
         Information:
+        {information}
+        
+        Question:
+        {question}
         """
 
         self.message.query = "Introduce yourself while telling me your address."
@@ -627,6 +631,106 @@ class MyTestCase(unittest.TestCase):
 
         if not self.message.done:
             self.fail(f"The task was not completed with self.message.done declared as {self.message.done}")
+
+        if status:
+            self.assertIn("Lower Kent Ridge Rd", status, "No mention of address in result string.")
+
+        else:
+            self.fail(f"Status fails true condition, value is {status}")
+
+    def test_create_langchain_vector_store_retriever(self):
+        authy = AuthPojo(self.config)
+
+        self.message.role.model = TEST_PROD_CONST.COMPLETIONS
+        self.message.role.embeddings = TEST_PROD_CONST.EMBEDDINGS
+        self.message.role.task = TASK_CONST.LANGCHAIN
+        self.message.role.subtask = SUBTASK_CONST.CREATE_VEC_STORE
+
+        self.message.task_completed = False
+        self.message.subtask_completed = False
+
+        self.message.k_search_value = 3
+        self.message.database_name = "cosmic_works"
+        self.message.collection_name = "products"
+
+        status = AppHandler(authy, self.message).main()
+
+        if not self.message.done:
+            self.fail(f"The task was not completed with self.message.done declared as {self.message.done}")
+
+        if status:
+            self.assertIsInstance(status, VectorStoreRetriever, "Status is not an instance of VectorStoreRetriever.")
+
+        else:
+            self.fail(f"Status fails true condition, value is {status}")
+
+    def test_create_langchain_agent_tools(self):
+        authy = AuthPojo(self.config)
+
+        self.message.role.model = TEST_PROD_CONST.COMPLETIONS
+        self.message.role.embeddings = TEST_PROD_CONST.EMBEDDINGS
+        self.message.role.task = TASK_CONST.LANGCHAIN
+        self.message.role.subtask = SUBTASK_CONST.CREATE_AGENT_TOOL
+
+        self.message.task_completed = False
+        self.message.subtask_completed = False
+
+        self.message.k_search_value = 3
+        self.message.database_name = "cosmic_works"
+        self.message.collection_name = "products"
+
+        status = AppHandler(authy, self.message).main()
+
+        if not self.message.done:
+            self.fail(f"The task was not completed with self.message.done declared as {self.message.done}")
+
+        if status:
+            self.assertIsInstance(status, list, "Status is not an instance of list of Tools.")
+
+        else:
+            self.fail(f"Status fails true condition, value is {status}")
+
+    def test_create_langchain_agent(self):
+        authy = AuthPojo(self.config)
+
+        self.message.role.model = TEST_PROD_CONST.COMPLETIONS
+        self.message.role.embeddings = TEST_PROD_CONST.EMBEDDINGS
+        self.message.role.task = TASK_CONST.LANGCHAIN
+        self.message.role.subtask = SUBTASK_CONST.CREATE_AGENT
+
+        self.message.task_completed = False
+        self.message.subtask_completed = False
+
+        self.message.prompt = """
+        You are a helpful, fun and friendly assistant emulating a person who is applying for a job.
+        You are designed to answer questions as to what a human interviewer would reasonably ask you.
+        Refrain from speaking in a third-person perspective and do not respond with anything that implies that you are 
+        an emulated assistant.
+        
+        Your name should be the job applicant's name.
+
+        Only answer questions related to the IDs.
+
+        If you are asked a question that is not in the list, respond with "I don't know, but you can e-mail the 
+        human version of me for more information!" or its equivalent.
+        """
+
+        self.message.query = "What can you tell me about ID 'kBix4APMK8UtqncG'"
+        self.message.k_search_value = 3
+
+        status = AppHandler(authy, self.message).main()
+
+        if not self.message.done:
+            self.fail(f"The task was not completed with self.message.done declared as {self.message.done}")
+
+        self.logger.debug(status.get("output"))
+
+        if status:
+            self.assertIsInstance(status, dict, "Status is not of type dict.")
+
+        else:
+            self.fail(f"Status fails true condition, value is {status}")
+
 
 
 if __name__ == '__main__':

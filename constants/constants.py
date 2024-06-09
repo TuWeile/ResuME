@@ -11,6 +11,9 @@ class SUBTASK_CONST(Enum):
     CLIENT = auto()
     RESPONSE = auto()
     RESPONSE_CONTEXT = auto()
+    CREATE_VEC_STORE = auto()
+    CREATE_AGENT = auto()
+    CREATE_AGENT_TOOL = auto()
 
 
 class SUBTASK_DB_CONST(Enum):
