@@ -1,0 +1,34 @@
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+.left-segment, .middle-segment, .right-segment {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #2e2e2e;
+}
+
+.left-segment {
+    background-color: lightblue;
+}
+
+.middle-segment {
+    background-color: lightgreen;
+}
+
+.right-segment {
+    background-color: lightcoral;
+}
+
+.taskbar {
+    height: 15vh; /* Adjust the height as needed */
+    background-color: darkgrey;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #2e2e2e;
+  }
