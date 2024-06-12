@@ -32,7 +32,6 @@ function App() {
   return (
     <div className="App">
       <ThreeSegmentLayout leftRatio={1} midRatio={2.5} rightRatio={0.8} />
-      <button onClick={togglePopup}>Show Popup</button>
       <PopupWindow show={popupVisible} onClose={togglePopup}></PopupWindow>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />

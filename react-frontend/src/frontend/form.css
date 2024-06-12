@@ -1,6 +1,14 @@
+/* src/components/MultiStepForm.css */
 .form-step {
     opacity: 0;
     animation: fadeIn 0.5s forwards;
+    text-align: center; /* Center content within the form step */
+}
+
+.logo {
+    display: block;
+    margin: 0 auto 20px; /* Center the logo and add some bottom margin */
+    max-width: 100px; /* Adjust the size of the logo */
 }
 
 @keyframes fadeIn {
@@ -9,12 +17,27 @@
     }
 }
 
-input {
+input, select, textarea {
     display: block;
     width: 100%;
     margin-bottom: 10px;
     padding: 8px;
     box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button-container.center {
+    justify-content: center;
 }
 
 button {
@@ -26,6 +49,47 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.form-button:hover {
     background-color: #0056b3;
+}
+
+.error {
+    border: 1px solid red;
+    background-color: #ffcccc;
+}
+
+.error-message {
+    color: red;
+    margin: 0;
+    font-size: 0.9em;
+}
+
+.experience-entry, .education-entry, .project-entry, .certification-entry {
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.delete-button {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: red;
+}
+
+.delete-button:hover {
+    color: darkred;
+}
+
+.popup-content {
+    max-height: 80vh; /* Set a maximum height for the popup content */
+    overflow-y: auto; /* Enable vertical scrolling if the content exceeds the max height */
+    padding: 20px;
 }

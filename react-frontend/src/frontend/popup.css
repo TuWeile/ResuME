@@ -1,4 +1,4 @@
-/* src/PopupWindow.css */
+/* src/components/Popup.css */
 .popup-overlay {
     position: fixed;
     top: 0;
@@ -11,32 +11,30 @@
     align-items: center;
     z-index: 1000;
     transition: opacity 0.3s ease-in-out;
-    opacity: 0;
-}
-
-.fade-in {
     opacity: 1;
-}
-
-.fade-out {
-    opacity: 0;
 }
 
 .popup-content {
     background: #fff;
-    border-radius: 15px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    max-width: 600px;
+    width: 100%;
+    max-height: 80vh; /* Ensure this matches the max-height defined in MultiStepForm.css */
+    overflow-y: auto; /* Ensure this matches the overflow-y defined in MultiStepForm.css */
     padding: 20px;
-    width: 400px;
-    max-width: 80%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-    transition: opacity 0.3s ease-in-out;
 }
 
 .popup-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.popup-body {
+    max-height: calc(80vh - 60px); /* Adjust based on header/footer height */
+    overflow-y: auto;
 }
 
 .close-button {
@@ -46,27 +44,10 @@
     cursor: pointer;
 }
 
-.popup-body {
-    margin-top: 10px;
+.fade-in {
+    opacity: 1;
 }
 
-input {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 8px;
-    box-sizing: border-box;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
+.fade-out {
+    opacity: 0;
 }

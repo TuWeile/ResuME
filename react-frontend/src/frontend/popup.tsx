@@ -18,9 +18,9 @@ const PopupWindow: React.FC<PopupWindowProps> = ({ show, onClose, title }) => {
       setVisible(true);
       setTimeout(() => {
         setFadeIn(true);
-      }, 10);
+      }, 10); // Slight delay to trigger the CSS transition
     } else {
-      setFadeIn(false)
+      setFadeIn(false);
       const timer = setTimeout(() => {
         setVisible(false);
       }, 300); // Duration of the fade-out transition
@@ -33,7 +33,6 @@ const PopupWindow: React.FC<PopupWindowProps> = ({ show, onClose, title }) => {
         <div className="popup-content" onClick={(e) => e.stopPropagation()}>
           <div className="popup-header">
             <h2>{title}</h2>
-            <button className="close-button" onClick={onClose}>×</button>
           </div>
           <div className="popup-body">
             <MultiStepForm onComplete={onClose} />
