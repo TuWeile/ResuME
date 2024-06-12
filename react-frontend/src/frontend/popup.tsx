@@ -12,6 +12,7 @@ interface PopupWindowProps {
 const PopupWindow: React.FC<PopupWindowProps> = ({ show, onClose, title }) => {
   const [visible, setVisible] = useState(show);
   const [fadeIn, setFadeIn] = useState(false);
+  const [hide, setHide] = useState(false);
 
   useEffect(() => {
     if (show) {
