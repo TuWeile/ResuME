@@ -1,10 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import ThreeSegmentLayout from './frontend/homepage';
 import PopupWindow from './frontend/popup';
 import LoadingScreen from './frontend/loadingscreen';
 
-function App() {
+interface AppProps {
+  prod: boolean;
+}
+
+const App: React.FC<AppProps> = ({ prod }) => {
   const [loading, setLoading] = useState(true);
   const [popupVisible, setPopupVisible] = useState(false);
   const [popupShow, setPopupShow] = useState(false);
@@ -12,9 +16,9 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-      setPopupShow(true);
+      setPopupShow(prod);
       setTimeout(() => {
-        setPopupVisible(true);
+        setPopupVisible(prod);
       }, 300);
     }, 6000);
 
@@ -30,24 +34,10 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <ThreeSegmentLayout leftRatio={1} midRatio={2.5} rightRatio={0.8} />
-      <PopupWindow show={popupVisible} onClose={togglePopup}></PopupWindow>
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-    </div>
+      <div className="App">
+        <ThreeSegmentLayout leftRatio={1} midRatio={2.5} rightRatio={0.8} />
+        {prod && <PopupWindow show={popupVisible} onClose={togglePopup} />}
+      </div>
   );
 };
 
