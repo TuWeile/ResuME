@@ -6,7 +6,7 @@ from decorators.decorators import Singleton
 
 @Singleton
 class LoggerHelper:
-    def __init__(self, logfile_path: str = f"../var/log/{datetime.now().strftime('%Y%m%d')}.txt") -> None:
+    def __init__(self, logfile_path: str = "C:/Users/flame/OneDrive/Documents/Microsoft Hackerthon/microsoftHackathon/var/log/new_log.txt") -> None:
         """
         Initializes the logger class interface which will send application logs to a particular location in os.
         :param logfile_path: The string value of that particular location in os.
