@@ -6,10 +6,10 @@ import certifi
 import pymongo
 from bson import ObjectId
 from langchain.agents.agent_toolkits import create_conversational_retrieval_agent
-from langchain_openai import AzureChatOpenAI
-from langchain_openai import AzureOpenAIEmbeddings
-# from langchain.chat_models import AzureChatOpenAI
-# from langchain.embeddings import AzureOpenAIEmbeddings
+# from langchain_openai import AzureChatOpenAI
+# from langchain_openai import AzureOpenAIEmbeddings
+from langchain.chat_models import AzureChatOpenAI
+from langchain.embeddings import AzureOpenAIEmbeddings
 from langchain.vectorstores import AzureCosmosDBVectorSearch
 from langchain_core.documents import Document
 from langchain_core.messages import SystemMessage
