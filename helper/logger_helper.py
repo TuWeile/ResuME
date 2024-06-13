@@ -11,6 +11,11 @@ class LoggerHelper:
         Initializes the logger class interface which will send application logs to a particular location in os.
         :param logfile_path: The string value of that particular location in os.
         """
+        if os.name == 'nt':
+            logfile_path = f"C:/Users/flame/OneDrive/Documents/Microsoft Hackerthon/microsoftHackathon/var/log/{datetime.now().strftime('%Y%m%d')}.txt"
+        elif os.name == "posix":
+            logfile_path = f"../var/log/{datetime.now().strftime('%Y%m%d')}.txt"
+            
         self.log_file = logfile_path
         self.logger = logging.getLogger(f"{self.__class__.__name__}_{id(self)}")
         self.logger.setLevel(logging.DEBUG)
