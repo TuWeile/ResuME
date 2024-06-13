@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { PersonalInfo, Experience, Education, Project, Certification, Address } from '../types';
+import axios from 'axios'; // Import axios if you are using it
 import { useLocation } from 'react-router-dom';
+import { PersonalInfo, Experience, Education, Project, Certification, Address } from '../types';
 import './form.css';
 
 interface MultiStepFormProps {
     onComplete: () => void;
 }
 
-const countries = ["United States", "Canada", "United Kingdom", "Australia", "Germany", "France", "India", "China", "Japan", "Mexico"]; // Add more countries as needed
+const countries = ["United States", "Canada", "United Kingdom", "Australia", "Germany", "France", "India", "China", "Japan", "Mexico"];
 
 const behaviouralQuestions = [
     "Describe a time you faced a challenge at work.",
@@ -146,6 +147,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
         }
 
         if (step === 15) {
+            sendDataToBackend();
             setShowLoading(true);
             setTimeout(() => {
                 setShowLoading(false);
@@ -242,6 +244,33 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
     const handleCopy = () => {
         navigator.clipboard.writeText(uniqueLink);
         setLinkCopied(true);
+    };
+
+    const sendDataToBackend = async () => {
+        const data = {
+            personalInfo,
+            address,
+            experiences,
+            educations,
+            projects,
+            certifications,
+            biography,
+            motivations,
+            strengths,
+            weaknesses,
+            linkedin,
+            website,
+            skills,
+            behaviouralQuestions: selectedQuestions,
+            behaviouralAnswers
+        };
+
+        try {
+            const response = await axios.post('http://localhost:4242/api/create', data);
+            console.log('Data submitted successfully:', response.data);
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        }
     };
 
     const renderStepContent = () => {
@@ -686,180 +715,6 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
                                 </div>
                             ))}
                         </div>
-                    </div>
-                );
-            case 8:
-                return (
-                    <div className="form-step fade-in">
-                        <h2>Thank you!</h2>
-                        <p>We appreciate you providing your details. We need a bit more information from you.</p>
-                    </div>
-                );
-            case 9:
-                return (
-                    <div className="form-step fade-in">
-                        <h2>Biography and Motivations</h2>
-                        <textarea
-                            placeholder="Biography"
-                            value={biography}
-                            onChange={(e) => setBiography(e.target.value)}
-                        />
-                        <textarea
-                            placeholder="Motivations"
-                            value={motivations}
-                            onChange={(e) => setMotivations(e.target.value)}
-                        />
-                    </div>
-                );
-            case 10:
-                return (
-                    <div className="form-step fade-in">
-                        <h2>Strengths and Weaknesses</h2>
-                        <textarea
-                            placeholder="Strengths"
-                            value={strengths}
-                            onChange={(e) => setStrengths(e.target.value)}
-                        />
-                        <textarea
-                            placeholder="Weaknesses"
-                            value={weaknesses}
-                            onChange={(e) => setWeaknesses(e.target.value)}
-                        />
-                    </div>
-                );
-            case 11:
-                return (
-                    <div className="form-step fade-in">
-                        <h2>LinkedIn, Website, and Skills</h2>
-                        <input
-                            type="url"
-                            placeholder="LinkedIn URL"
-                            value={linkedin}
-                            onChange={(e) => setLinkedin(e.target.value)}
-                        />
-                        <input
-                            type="url"
-                            placeholder="Website URL"
-                            value={website}
-                            onChange={(e) => setWebsite(e.target.value)}
-                        />
-                        <input
-                            type="text"
-                            placeholder="Skills (comma-separated)"
-                            value={skills}
-                            onChange={(e) => setSkills(e.target.value)}
-                        />
-                    </div>
-                );
-            case 12:
-                return (
-                    <div className="form-step fade-in">
-                        <h2>Behavioural Questions</h2>
-                        <p>Would you like to answer some behavioural questions?</p>
-                    </div>
-                );
-            case 13:
-                return (
-                    <div className="form-step fade-in">
-                        <h2>Behavioural Question 1</h2>
-                        <p>{selectedQuestions[0]}</p>
-                        <textarea
-                            placeholder="Your Answer"
-                            value={behaviouralAnswers[0]}
-                            onChange={(e) => setBehaviouralAnswers([e.target.value, behaviouralAnswers[1]])}
-                        />
-                    </div>
-                );
-            case 14:
-                return (
-                    <div className="form-step fade-in">
-                        <h2>Behavioural Question 2</h2>
-                        <p>{selectedQuestions[1]}</p>
-                        <textarea
-                            placeholder="Your Answer"
-                            value={behaviouralAnswers[1]}
-                            onChange={(e) => setBehaviouralAnswers([behaviouralAnswers[0], e.target.value])}
-                        />
-                    </div>
-                );
-            case 15:
-                return (
-                    <div className="form-step fade-in">
-                        <h2>Review Your Details</h2>
-                        <div className="review-section">
-                            <h3>Personal Information</h3>
-                            <p><strong>First Name:</strong> {personalInfo.first_name}</p>
-                            <p><strong>Last Name:</strong> {personalInfo.last_name}</p>
-                            <p><strong>Email:</strong> {personalInfo.email}</p>
-                            <p><strong>Phone:</strong> {personalInfo.phone}</p>
-                            <p><strong>Date of Birth:</strong> {personalInfo.date_of_birth}</p>
-                        </div>
-                        <div className="review-section">
-                            <h3>Address Information</h3>
-                            <p><strong>Street:</strong> {address.street}</p>
-                            <p><strong>City:</strong> {address.city}</p>
-                            <p><strong>State:</strong> {address.state}</p>
-                            <p><strong>Zip:</strong> {address.zip}</p>
-                            <p><strong>Country:</strong> {address.country}</p>
-                        </div>
-                        <div className="review-section">
-                            <h3>Experiences</h3>
-                            {experiences.map((experience, index) => (
-                                <div key={index}>
-                                    <p><strong>Company:</strong> {experience.company}</p>
-                                    <p><strong>Position:</strong> {experience.position}</p>
-                                    <p><strong>Start Date:</strong> {experience.start_date}</p>
-                                    <p><strong>End Date:</strong> {experience.end_date}</p>
-                                    <p><strong>Responsibilities:</strong> {experience.responsibilities}</p>
-                                    <p><strong>Details:</strong> {experience.details}</p>
-                                    {index < experiences.length - 1 && <br />}
-                                </div>
-                            ))}
-                        </div>
-                        <div className="review-section">
-                            <h3>Educations</h3>
-                            {educations.map((education, index) => (
-                                <div key={index}>
-                                    <p><strong>Institution:</strong> {education.institution}</p>
-                                    <p><strong>Degree:</strong> {education.degree}</p>
-                                    <p><strong>Major:</strong> {education.major}</p>
-                                    <p><strong>Minor:</strong> {education.minor}</p>
-                                    <p><strong>GPA:</strong> {education.gpa}</p>
-                                    <p><strong>Max GPA:</strong> {education.max_gpa}</p>
-                                    <p><strong>Honours:</strong> {education.honours}</p>
-                                    <p><strong>Start Date:</strong> {education.start_date}</p>
-                                    <p><strong>End Date:</strong> {education.end_date}</p>
-                                    <p><strong>Details:</strong> {education.details}</p>
-                                    {index < educations.length - 1 && <br />}
-                                </div>
-                            ))}
-                        </div>
-                        <div className="review-section">
-                            <h3>Projects</h3>
-                            {projects.map((project, index) => (
-                                <div key={index}>
-                                    <p><strong>Project Name:</strong> {project.name}</p>
-                                    <p><strong>Description:</strong> {project.description}</p>
-                                    <p><strong>Technologies:</strong> {project.technologies.join(', ')}</p>
-                                    <p><strong>Role:</strong> {project.role}</p>
-                                    <p><strong>URL:</strong> {project.url}</p>
-                                    <p><strong>Start Date:</strong> {project.start_date}</p>
-                                    <p><strong>End Date:</strong> {project.end_date}</p>
-                                    {index < projects.length - 1 && <br />}
-                                </div>
-                            ))}
-                        </div>
-                        <div className="review-section">
-                            <h3>Certifications</h3>
-                            {certifications.map((certification, index) => (
-                                <div key={index}>
-                                    <p><strong>Title:</strong> {certification.title}</p>
-                                    <p><strong>Achievement:</strong> {certification.achievement}</p>
-                                    <p><strong>Date:</strong> {certification.date}</p>
-                                    {index < certifications.length - 1 && <br />}
-                                </div>
-                            ))}
-                        </div>
                         <div className="review-section">
                             <h3>Biography</h3>
                             <p><strong>Biography:</strong> {biography}</p>
@@ -888,6 +743,206 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
                         </div>
                     </div>
                 );
+                case 8:
+                    return (
+                        <div className="form-step fade-in">
+                            <h2>Thank you!</h2>
+                            <p>We appreciate you providing your details. We need a bit more information from you.</p>
+                        </div>
+                    );
+                case 9:
+                    return (
+                        <div className="form-step fade-in">
+                            <h2>Biography and Motivations</h2>
+                            <textarea
+                                placeholder="Biography"
+                                value={biography}
+                                onChange={(e) => setBiography(e.target.value)}
+                            />
+                            <textarea
+                                placeholder="Motivations"
+                                value={motivations}
+                                onChange={(e) => setMotivations(e.target.value)}
+                            />
+                        </div>
+                    );
+                case 10:
+                    return (
+                        <div className="form-step fade-in">
+                            <h2>Strengths and Weaknesses</h2>
+                            <textarea
+                                placeholder="Strengths"
+                                value={strengths}
+                                onChange={(e) => setStrengths(e.target.value)}
+                            />
+                            <textarea
+                                placeholder="Weaknesses"
+                                value={weaknesses}
+                                onChange={(e) => setWeaknesses(e.target.value)}
+                            />
+                        </div>
+                    );
+                case 11:
+                    return (
+                        <div className="form-step fade-in">
+                            <h2>LinkedIn, Website, and Skills</h2>
+                            <input
+                                type="url"
+                                placeholder="LinkedIn URL"
+                                value={linkedin}
+                                onChange={(e) => setLinkedin(e.target.value)}
+                            />
+                            <input
+                                type="url"
+                                placeholder="Website URL"
+                                value={website}
+                                onChange={(e) => setWebsite(e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                placeholder="Skills (comma-separated)"
+                                value={skills}
+                                onChange={(e) => setSkills(e.target.value)}
+                            />
+                        </div>
+                    );
+                case 12:
+                    return (
+                        <div className="form-step fade-in">
+                            <h2>Behavioural Questions</h2>
+                            <p>Would you like to answer some behavioural questions?</p>
+                        </div>
+                    );
+                case 13:
+                    return (
+                        <div className="form-step fade-in">
+                            <h2>Behavioural Question 1</h2>
+                            <p>{selectedQuestions[0]}</p>
+                            <textarea
+                                placeholder="Your Answer"
+                                value={behaviouralAnswers[0]}
+                                onChange={(e) => setBehaviouralAnswers([e.target.value, behaviouralAnswers[1]])}
+                            />
+                        </div>
+                    );
+                case 14:
+                    return (
+                        <div className="form-step fade-in">
+                            <h2>Behavioural Question 2</h2>
+                            <p>{selectedQuestions[1]}</p>
+                            <textarea
+                                placeholder="Your Answer"
+                                value={behaviouralAnswers[1]}
+                                onChange={(e) => setBehaviouralAnswers([behaviouralAnswers[0], e.target.value])}
+                            />
+                        </div>
+                    );
+                case 15:
+                    return (
+                        <div className="form-step fade-in">
+                            <h2>Review Your Details</h2>
+                            <div className="review-section">
+                                <h3>Personal Information</h3>
+                                <p><strong>First Name:</strong> {personalInfo.first_name}</p>
+                                <p><strong>Last Name:</strong> {personalInfo.last_name}</p>
+                                <p><strong>Email:</strong> {personalInfo.email}</p>
+                                <p><strong>Phone:</strong> {personalInfo.phone}</p>
+                                <p><strong>Date of Birth:</strong> {personalInfo.date_of_birth}</p>
+                            </div>
+                            <div className="review-section">
+                                <h3>Address Information</h3>
+                                <p><strong>Street:</strong> {address.street}</p>
+                                <p><strong>City:</strong> {address.city}</p>
+                                <p><strong>State:</strong> {address.state}</p>
+                                <p><strong>Zip:</strong> {address.zip}</p>
+                                <p><strong>Country:</strong> {address.country}</p>
+                            </div>
+                            <div className="review-section">
+                                <h3>Experiences</h3>
+                                {experiences.map((experience, index) => (
+                                    <div key={index}>
+                                        <p><strong>Company:</strong> {experience.company}</p>
+                                        <p><strong>Position:</strong> {experience.position}</p>
+                                        <p><strong>Start Date:</strong> {experience.start_date}</p>
+                                        <p><strong>End Date:</strong> {experience.end_date}</p>
+                                        <p><strong>Responsibilities:</strong> {experience.responsibilities}</p>
+                                        <p><strong>Details:</strong> {experience.details}</p>
+                                        {index < experiences.length - 1 && <br />}
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="review-section">
+                                <h3>Educations</h3>
+                                {educations.map((education, index) => (
+                                    <div key={index}>
+                                        <p><strong>Institution:</strong> {education.institution}</p>
+                                        <p><strong>Degree:</strong> {education.degree}</p>
+                                        <p><strong>Major:</strong> {education.major}</p>
+                                        <p><strong>Minor:</strong> {education.minor}</p>
+                                        <p><strong>GPA:</strong> {education.gpa}</p>
+                                        <p><strong>Max GPA:</strong> {education.max_gpa}</p>
+                                        <p><strong>Honours:</strong> {education.honours}</p>
+                                        <p><strong>Start Date:</strong> {education.start_date}</p>
+                                        <p><strong>End Date:</strong> {education.end_date}</p>
+                                        <p><strong>Details:</strong> {education.details}</p>
+                                        {index < educations.length - 1 && <br />}
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="review-section">
+                                <h3>Projects</h3>
+                                {projects.map((project, index) => (
+                                    <div key={index}>
+                                        <p><strong>Project Name:</strong> {project.name}</p>
+                                        <p><strong>Description:</strong> {project.description}</p>
+                                        <p><strong>Technologies:</strong> {project.technologies.join(', ')}</p>
+                                        <p><strong>Role:</strong> {project.role}</p>
+                                        <p><strong>URL:</strong> {project.url}</p>
+                                        <p><strong>Start Date:</strong> {project.start_date}</p>
+                                        <p><strong>End Date:</strong> {project.end_date}</p>
+                                        {index < projects.length - 1 && <br />}
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="review-section">
+                                <h3>Certifications</h3>
+                                {certifications.map((certification, index) => (
+                                    <div key={index}>
+                                        <p><strong>Title:</strong> {certification.title}</p>
+                                        <p><strong>Achievement:</strong> {certification.achievement}</p>
+                                        <p><strong>Date:</strong> {certification.date}</p>
+                                        {index < certifications.length - 1 && <br />}
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="review-section">
+                                <h3>Biography</h3>
+                                <p><strong>Biography:</strong> {biography}</p>
+                                <p><strong>Motivations:</strong> {motivations}</p>
+                            </div>
+                            <div className="review-section">
+                                <h3>Strengths and Weaknesses</h3>
+                                <p><strong>Strengths:</strong> {strengths}</p>
+                                <p><strong>Weaknesses:</strong> {weaknesses}</p>
+                            </div>
+                            <div className="review-section">
+                                <h3>LinkedIn and Website</h3>
+                                <p><strong>LinkedIn:</strong> {linkedin}</p>
+                                <p><strong>Website:</strong> {website}</p>
+                            </div>
+                            <div className="review-section">
+                                <h3>Skills</h3>
+                                <p>{skills}</p>
+                            </div>
+                            <div className="review-section">
+                                <h3>Behavioural Questions</h3>
+                                <p><strong>Question 1:</strong> {selectedQuestions[0]}</p>
+                                <p><strong>Answer 1:</strong> {behaviouralAnswers[0]}</p>
+                                <p><strong>Question 2:</strong> {selectedQuestions[1]}</p>
+                                <p><strong>Answer 2:</strong> {behaviouralAnswers[1]}</p>
+                            </div>
+                        </div>
+                    );
             case 16:
                 return (
                     <div className="form-step fade-in">
