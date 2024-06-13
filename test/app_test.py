@@ -22,7 +22,7 @@ class MyTestCase(unittest.TestCase):
     file_helper = FileHelper()
     common_helper = CommonHelper()
     config_helper = ConfigHelper()
-    logger = LoggerHelper(logfile_path="C:/Users/flame/OneDrive/Documents/Microsoft Hackerthon/microsoftHackathon/var/log/new_log.txt")
+    logger = LoggerHelper()
     message = InputPojo()
 
     test_address = Address(
