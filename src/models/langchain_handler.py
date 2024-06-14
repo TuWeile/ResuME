@@ -325,7 +325,6 @@ class LangchainHandler(BaseHandler):
             else:
                 self.logger.warning(f"Class {class_name} of method {method_name}: {subtask} determined. "
                                     f"Unable to determine correct sub-tasking. Failing.")
-                result = self.create_agent()
                 self.message.subtask_completed = True
 
         except Exception as bad_exception:
