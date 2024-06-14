@@ -91,6 +91,9 @@ class DBHelper:
             if len(read) > 1:
                 self.logger.info(f"Class {class_name} of method {method_name}: Taking the latest entry as document.")
                 read = read.pop().to_json()
+                #Added by wyapb
+                read = read['_id']
+                #end add
 
             elif len(read) == 1:
                 read = read[0].to_json()

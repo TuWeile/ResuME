@@ -37,7 +37,7 @@ class InputPojo:
         self.langchain_exists: bool = False
 
         self.database_name: str = "cosmic_works"
-        self.collection_name: str = "products"
+        self.collection_name: str = "interviewee"
 
     def to_json(self):
         """
