@@ -87,7 +87,7 @@ def create_new_profile_bot(request: User):
         }
 
 # create function api endpoint to bypass forms at web app start up
-@app.get("/api/create")
+@app.get("/api/chat")
 def get_profile_bot(q: str):
     authy = AuthPojo(config)
     read_obj = ReadIdPojo()
