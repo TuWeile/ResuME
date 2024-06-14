@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 # from pojo.api_models.ai_request import AIRequest
 # from test.cosmic_works.cosmic_works_ai_agent import CosmicWorksAIAgent
-#test_change
+
 from bson.objectid import ObjectId
 
 from constants.constants import TASK_CONST, SUBTASK_DB_CONST
@@ -15,7 +15,7 @@ from helper.config_helper import ConfigHelper
 from helper.file_helper import FileHelper
 from helper.logger_helper import LoggerHelper
 from pojo.auth_pojo import AuthPojo
-from pojo.input_pojo import InputPojo
+from pojo.input_pojo import InputPojo, ReadIdPojo, VectorIndexPojo
 from pojo.user_pojo import User
 from src.app.app_handler import AppHandler
 
@@ -86,6 +86,36 @@ def create_new_profile_bot(request: User):
             "user": request
         }
 
+# create function api endpoint to bypass forms at web app start up
+@app.get("/api/create")
+def get_profile_bot(q: str):
+    authy = AuthPojo(config)
+    read_obj = ReadIdPojo()
+
+    read_obj._id = ObjectId(q)  # or change this value to an existing objectID in coll
+
+    message.read_ids.append(read_obj)
+    message.role.task = TASK_CONST.DATABASE
+    message.role.subtask = SUBTASK_DB_CONST.READ
+
+    message.task_completed = False
+    message.subtask_completed = False
+
+    status = AppHandler(authy, message).main()
+    result_dict ={
+        "status":"ok",
+        "message":"Received query parameter",
+        "q":q
+        }
+    var_status = vars(status)
+    result_dict['user'] = var_status
+    
+
+    if not message.done or not status:
+        return {"message":f"The task was not completed with self.message.done declared as {message.done} or status is None"}
+    else:
+        return  result_dict
+# end new function
 
 @app.post("/api/create")
 def create_new_profile_bot(request : User):
