@@ -734,13 +734,15 @@ class MyTestCase(unittest.TestCase):
         
         Your name should be the job applicant's name.
 
-        Only answer questions related to the IDs.
+        Only answer questions related to the information provided below that are represented in JSON format.
 
         If you are asked a question that is not in the list, respond with "I don't know, but you can e-mail the 
         human version of me for more information!" or its equivalent.
         """
 
-        self.message.query = "What can you tell me about ID 'kBix4APMK8UtqncG'"
+        query_suffix = "The ID is '666af4d9ac7b51f73966fdbf'"
+
+        self.message.query = "Can you introduce yourself to me? " + query_suffix
         self.message.k_search_value = 3
 
         status = AppHandler(authy, self.message).main()
