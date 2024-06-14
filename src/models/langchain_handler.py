@@ -228,7 +228,7 @@ class LangchainHandler(BaseHandler):
         finally:
             return result
 
-    def get_entry_by_id(self, product_id: str) -> str:
+    def get_entry_by_id(self, id: str) -> str:
         """
         Retrieves an entry by its ID.
         :return: str
@@ -242,12 +242,15 @@ class LangchainHandler(BaseHandler):
             db = db_client[f"{self.message.database_name}"]
             collection = db[f"{self.message.collection_name}"]
 
-            doc = collection.find_one({"id": product_id})
+            doc = collection.find_one({"_id": ObjectId(id)})
 
             if "contentVector" in doc:
                 del doc["contentVector"]
 
+            doc["_id"] = str(doc["_id"])
+
             result = json.dumps(doc)
+            self.logger.debug(result)
 
         except Exception as bad_exception:
             self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: {bad_exception}")
