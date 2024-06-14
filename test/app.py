@@ -56,6 +56,38 @@ def root():
 
 
 @app.get("/api/create")
+def create_new_profile_bot(request: User):
+    authy = AuthPojo(config)
+
+    unique_id = common_helper.get_id_random()
+    request.id = unique_id
+
+    message.documents.append(request)
+    message.role.task = TASK_CONST.DATABASE
+    message.role.subtask = SUBTASK_DB_CONST.CREATE
+
+    message.task_completed = False
+    message.subtask_completed = False
+
+    status = AppHandler(authy, message).main()
+
+    if message.done and isinstance(status, ObjectId):
+        logger.debug(f"Received and processed API request to create new profile: {request}. Status: {str(status)}")
+        return {
+            "status": "ok",
+            "message": "Profile returned successfully",
+            "user": request,
+            "identifier": str(status)}
+    else:
+        logger.warning(f"Failed API request due to parameters message.done: [{message.done}] status: [{status}]")
+        return {
+            "status": "fail",
+            "message": "Unable to process request due to failed internal parameters from backend.",
+            "user": request
+        }
+
+
+@app.post("/api/create")
 def create_new_profile_bot(request : User):
     
     authy = AuthPojo(config)
