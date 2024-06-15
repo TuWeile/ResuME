@@ -12,7 +12,10 @@
 }
 
 .left-segment {
-    background-color: lightblue;
+    background-color: white;
+    position: relative; /* Ensure the button is positioned relative to this segment */
+    display: flex;
+    flex-direction: column;
 }
 
 .middle-segment {
@@ -21,6 +24,11 @@
 
 .right-segment {
     background-color: lightcoral;
+}
+ .logo-corner {
+     width: 5vh;
+     height: 5vh;
+     padding-right: 20px;
 }
 
 .taskbar {
@@ -32,3 +40,117 @@
     justify-content: center;
     border-bottom: 1px solid #2e2e2e;
   }
+
+.chatbot {
+    height: 85vh; /* Adjust the height as needed */
+    background-color: rgb(198, 180, 240);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #2e2e2e;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.search-chat {
+    margin-bottom: 20px;
+}
+
+.search-chat-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-chat-input {
+    width: 100%;
+    border: 3px solid #E0E0E0;
+    border-radius: 0 5px 5px 0;
+    font-size: 1rem;
+    outline: none;
+    border-left: none; /* Remove the left border */
+    margin-bottom: 0px;
+}
+
+.search-chat-button {
+    padding: 10px;
+    border: 3px solid #E0E0E0;
+    border-radius: 5px 0 0 5px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    font-size: 1rem;
+    outline: none;
+    border-right: none; /* Remove the right border */
+}
+
+.search-chat-button i {
+    font-size: 1rem;
+}
+
+.chat-list {
+    margin-top: 1vh;
+}
+
+.chat-entry {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.avatar {
+    width: 4vh;
+    height: 4vh;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.chat-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.chat-message {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+}
+
+.chat-entry:hover {
+    background-color: #f0f0f0;
+}
+
+.create-bot-container {
+    position: absolute;
+    bottom: 20px; /* Adjust as necessary */
+    left: 20px; /* Ensure alignment with padding */
+    right: 20px; /* Ensure alignment with padding */
+}
+
+.create-bot-button {
+    width: 100%; /* Stretch to fill the container */
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+}
+
+.create-bot-button:hover {
+    background-color: #333;
+}

@@ -1,39 +1,92 @@
-.App {
-    text-align: center;
-  }
-  
-  .App-logo {
-    height: 40vmin;
-    pointer-events: none;
-  }
-  
-  @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-      animation: App-logo-spin infinite 20s linear;
-    }
-  }
-  
-  .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-  }
-  
-  .App-link {
-    color: #61dafb;
-  }
-  
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.left-segment, .middle-segment, .right-segment {
+  padding: 20px;
+  box-sizing: border-box;
+  border: 1px solid #2e2e2e;
+}
+
+.middle-segment {
+  background-color: lightgreen;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-segment {
+  background-color: lightcoral;
+}
+
+.taskbar {
+  height: 15vh; /* Adjust the height as needed */
+  background-color: darkgrey;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #2e2e2e;
+}
+
+.chatbot {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.left-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.search-chat {
+  margin-bottom: 20px;
+}
+
+.search-chat-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.error-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  padding: 20px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  text-align: center;
+}
+
+.error-popup h2 {
+  margin: 0 0 10px 0;
+  font-size: 1.5rem;
+}
+
+.error-popup p {
+  margin: 0;
+}
