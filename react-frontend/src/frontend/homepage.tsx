@@ -148,14 +148,14 @@ const ThreeSegmentLayout: React.FC<ThreeSegmentLayoutProps> = ({ leftRatio, midR
             {isAboutUsPopupVisible && (
                 <PopupWindow show={isAboutUsPopupVisible} onClose={handleCloseAboutUsPopup}>
                     <div className="about-us-popup-content">
-                        <p>This submission is done in fulfillment of the requirements for the <a href="https://azurecosmosdb.devpost.com/" target="_blank" rel="noopener noreferrer">Microsoft Developers AI Hackathon 2024</a> in Devpost.</p>
+                        <p>This submission is done in fulfillment of the requirements for the <a href="https://azurecosmosdb.devpost.com/" target="_blank" rel="noopener noreferrer">Microsoft Developers AI Hackathon 2024</a> in Devpost. Find out more about this project from our <a href={"https://github.com/TuWeile/microsoftHackathon"} target={"_blank"} rel={"noopener noreferrer"}>Github repository</a> here!</p>
                         <div className="about-us-content">
-                            <h3>The team members:</h3>
+                            <h3>Team members</h3>
                             <ul>
-                                <li>Chong Jun Hao <i className="fab fa-linkedin linkedin-icon"></i></li>
-                                <li>Cui Xiuqun <i className="fab fa-linkedin linkedin-icon"></i></li>
-                                <li>Tu Weile <i className="fab fa-linkedin linkedin-icon"></i></li>
-                                <li>Yap Wei Xuan <i className="fab fa-linkedin linkedin-icon"></i></li>
+                                <li>Chong Jun Hao <a href={"https://www.linkedin.com/in/xiuqun-cui/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
+                                <li>Cui Xiuqun <a href={"https://www.linkedin.com/in/xiuqun-cui/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
+                                <li>Tu Weile <a href={"https://www.linkedin.com/in/tuweile/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
+                                <li>Yap Wei Xuan <a href={"https://www.linkedin.com/in/xiuqun-cui/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
                             </ul>
                         </div>
                     </div>
