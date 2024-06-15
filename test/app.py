@@ -91,7 +91,9 @@ def create_new_profile_bot(request: User):
 def get_profile_bot(q: str):
     authy = AuthPojo(config)
     read_obj = ReadIdPojo()
-
+    if len(q) != 24:
+        return {"status":"NG","message":f"Invalid ID"} 
+    
     read_obj._id = ObjectId(q)  # or change this value to an existing objectID in coll
 
     message.read_ids.append(read_obj)
@@ -102,6 +104,8 @@ def get_profile_bot(q: str):
     message.subtask_completed = False
 
     status = AppHandler(authy, message).main()
+    if not status:
+        return {"status":"NG","message":f"ID {q} does not exist in database"}
     result_dict ={
         "status":"ok",
         "message":"Received query parameter",
@@ -112,7 +116,7 @@ def get_profile_bot(q: str):
     
 
     if not message.done or not status:
-        return {"message":f"The task was not completed with self.message.done declared as {message.done} or status is None"}
+        return {"status":"NG","message":f"The task was not completed with self.message.done declared as {message.done} or status is None"}
     else:
         return  result_dict
 # end new function
@@ -122,6 +126,8 @@ def get_profile_bot(q: str):
 def get_profile_bot(q: str):
     authy = AuthPojo(config)
     read_obj = ReadIdPojo()
+    if len(q) != 24:
+        return {"status":"NG","message":f"Invalid ID"} 
 
     read_obj._id = ObjectId(q)  # or change this value to an existing objectID in coll
 
@@ -133,6 +139,8 @@ def get_profile_bot(q: str):
     message.subtask_completed = False
 
     status = AppHandler(authy, message).main()
+    if not status:
+        return {"status":"NG","message":f"ID {q} does not exist in database"}
     result_dict ={
         "status":"ok",
         "message":"Received query parameter",
@@ -143,7 +151,7 @@ def get_profile_bot(q: str):
     
 
     if not message.done or not status:
-        return {"message":f"The task was not completed with self.message.done declared as {message.done} or status is None"}
+        return {"status":"NG","message":f"The task was not completed with self.message.done declared as {message.done} or status is None"}
     else:
         return  result_dict
 # end new function
@@ -155,6 +163,26 @@ def get_profile_bot(request: PromptInputPojo):
     q = request.q
     prompt = request.prompt
     
+    if len(q) != 24:
+        return {"status":"NG","message":f"Invalid ID"} 
+    
+    # Find Id in database
+    authy = AuthPojo(config)
+    read_obj = ReadIdPojo()
+    read_obj._id = ObjectId(q)  # or change this value to an existing objectID in coll
+
+    message.read_ids.append(read_obj)
+    message.role.task = TASK_CONST.DATABASE
+    message.role.subtask = SUBTASK_DB_CONST.READ
+
+    message.task_completed = False
+    message.subtask_completed = False
+
+    status = AppHandler(authy, message).main()
+    if not status:
+        return {"status":"NG","message":f"ID {q} does not exist in database"}
+    
+    # Get Prompt Response
     if q not in agent_pool:
         authy = AuthPojo(config)
         message.role.model = TEST_PROD_CONST.COMPLETIONS
