@@ -77,7 +77,7 @@ const ThreeSegmentLayout: React.FC<ThreeSegmentLayoutProps> = ({ leftRatio, midR
                             <img src="/avatar.png" alt="Avatar" className="avatar" />
                             <div className="chat-details">
                                 <p className="user-name">{userData.personalInfo.first_name} {userData.personalInfo.last_name}</p>
-                                <p className="chat-message">This is a placeholder message from the chatbot.</p>
+                                <p className="chat-message">Chat to find out more about me!</p>
                             </div>
                         </div>
                     ) : (
@@ -92,7 +92,49 @@ const ThreeSegmentLayout: React.FC<ThreeSegmentLayoutProps> = ({ leftRatio, midR
             </div>
             <div className="mid-segment" style={{ flex: midRatio }}>
                 <div className="taskbar">
-                    WhatsApp like front goes here
+                    {userData ? (
+                        <>
+                            <div className="taskbar-left">
+                                <img src="/avatar.png" alt="Avatar" className="taskbar-avatar" />
+                                <div className="taskbar-details">
+                                    <p className="taskbar-name">{userData.personalInfo.first_name} {userData.personalInfo.last_name}</p>
+                                    <p className="taskbar-date">Created on {formatDate(userData.created_at)}</p>
+                                </div>
+                            </div>
+                            <div className="taskbar-right">
+                                <button className="taskbar-icon-button" onClick={handleEmailClick}>
+                                    <i className="fas fa-envelope"></i>
+                                </button>
+                                <button className="taskbar-icon-button" onClick={handleViewAttachmentsClick}>
+                                    <i className="fas fa-paperclip"></i>
+                                </button>
+                                <button className="taskbar-icon-button" onClick={handleMoreOptionsClick}>
+                                    <i className="fas fa-user"></i>
+                                </button>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div className="taskbar-left">
+                                <img src="/botface.png" alt="Bot" className="taskbar-avatar" />
+                                <div className="taskbar-details">
+                                    <p className="taskbar-name">Chatbot Assistant</p>
+                                    <p className="taskbar-date">Created to serve humans</p>
+                                </div>
+                            </div>
+                            <div className="taskbar-right">
+                                <button className="taskbar-icon-button" onClick={handleEmailClick}>
+                                    <i className="fas fa-envelope"></i>
+                                </button>
+                                <button className="taskbar-icon-button" onClick={handleViewAttachmentsClick}>
+                                    <i className="fas fa-paperclip"></i>
+                                </button>
+                                <button className="taskbar-icon-button" onClick={handleMoreOptionsClick}>
+                                    <i className="fas fa-user"></i>
+                                </button>
+                            </div>
+                        </>
+                    )}
                 </div>
                 <div className="chatbot">
                     <Chatbot />
@@ -148,14 +190,14 @@ const ThreeSegmentLayout: React.FC<ThreeSegmentLayoutProps> = ({ leftRatio, midR
             {isAboutUsPopupVisible && (
                 <PopupWindow show={isAboutUsPopupVisible} onClose={handleCloseAboutUsPopup}>
                     <div className="about-us-popup-content">
-                        <p>This submission is done in fulfillment of the requirements for the <a href="https://azurecosmosdb.devpost.com/" target="_blank" rel="noopener noreferrer">Microsoft Developers AI Hackathon 2024</a> in Devpost.</p>
+                        <p>This submission is done in fulfillment of the requirements for the <a href="https://azurecosmosdb.devpost.com/" target="_blank" rel="noopener noreferrer">Microsoft Developers AI Hackathon 2024</a> in Devpost. Find out more about this project from our <a href={"https://github.com/TuWeile/microsoftHackathon"} target={"_blank"} rel={"noopener noreferrer"}>Github repository</a> here!</p>
                         <div className="about-us-content">
-                            <h3>The team members:</h3>
+                            <h3>Team members</h3>
                             <ul>
-                                <li>Chong Jun Hao <i className="fab fa-linkedin linkedin-icon"></i></li>
-                                <li>Cui Xiuqun <i className="fab fa-linkedin linkedin-icon"></i></li>
-                                <li>Tu Weile <i className="fab fa-linkedin linkedin-icon"></i></li>
-                                <li>Yap Wei Xuan <i className="fab fa-linkedin linkedin-icon"></i></li>
+                                <li>Chong Jun Hao <a href={"https://www.linkedin.com/in/xiuqun-cui/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
+                                <li>Cui Xiuqun <a href={"https://www.linkedin.com/in/xiuqun-cui/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
+                                <li>Tu Weile <a href={"https://www.linkedin.com/in/tuweile/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
+                                <li>Yap Wei Xuan <a href={"https://www.linkedin.com/in/xiuqun-cui/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
                             </ul>
                         </div>
                     </div>

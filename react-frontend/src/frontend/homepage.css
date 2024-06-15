@@ -20,7 +20,8 @@
 }
 
 .middle-segment {
-    background-color: lightgreen;
+    display: flex;
+    flex-direction: column;
 }
 
 .right-segment {
@@ -37,24 +38,9 @@
     padding-right: 20px;
 }
 
-.taskbar {
-    height: 10vh; /* Adjust the height as needed */
-    background-color: darkgrey;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid #2e2e2e;
-}
-
-.chatbot {
-    height: 90vh; /* Adjust the height as needed */
-    background-color: rgb(198, 180, 240);
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid #2e2e2e;
+.middle-error {
+    width: 20%;
+    text-align: center;
 }
 
 .title {
@@ -283,3 +269,72 @@
     color: #007bff;
     cursor: pointer;
 }
+
+/* Add this to your existing homepage.css */
+
+.taskbar {
+    height: 5vh; /* Adjust the height as needed */
+    padding: 0.25vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #2e2e2e;
+}
+
+.chatbot {
+    height: calc(100vh - 5vh - 1vh - 20px); /* Adjust the height as needed */
+    padding: 1vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.taskbar-left {
+    display: flex;
+    align-items: center;
+    margin-left: 1vh;
+}
+
+.taskbar-avatar {
+    width: 4vh;
+    height: 4vh;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.taskbar-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.taskbar-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.taskbar-date {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+}
+
+.taskbar-right {
+    display: flex;
+    align-items: center;
+    margin-right: 1vh;
+}
+
+.taskbar-icon-button {
+    background: none;
+    border: none;
+    color: #000000;
+    cursor: pointer;
+    font-size: 1.5rem;
+    margin-left: 10px;
+}
+
+.taskbar-icon-button i {
+    font-size: 1.5rem;
+}
+
