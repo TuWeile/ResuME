@@ -17,7 +17,7 @@ const Chatbot: FC = () => {
   const q=url[lenurl]
 
 
-  const backend_service_name="localhost"
+  const backend_service_name="backend"
   const backendUrl='http://'+backend_service_name+':4242/api/prompt_response'
 
 
@@ -127,12 +127,14 @@ const styles: { [key: string]: CSSProperties } = {
   botMessage: {
     backgroundColor: 'rgba(224,224,224,255)',
     borderRadius: '12px 12px 12px 4px',
+
   },
   userMessage: {
     backgroundColor: 'rgba(0,0,0,255)',
     color: 'white',
     textAlign: 'right',
     borderRadius: '12px 12px 4px 12px',
+
   },
   inputContainer: {
     display: 'flex',
@@ -140,12 +142,11 @@ const styles: { [key: string]: CSSProperties } = {
   },
   input: {
     flex: 1,
-
-
     borderTop: '1px solid #ccc',
     borderRadius: '4px',
     height: "100%",
     border: '3px solid #E0E0E0',
+
   },
   sendButton: {
 

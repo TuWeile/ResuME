@@ -5,7 +5,7 @@ import unittest
 from langchain_core.vectorstores import VectorStoreRetriever
 from openai.types.chat import ChatCompletion
 from pymongo.command_cursor import CommandCursor
-
+ 
 from constants.constants import TASK_CONST, SUBTASK_CONST, MODEL_CONST, SUBTASK_DB_CONST, TEST_PROD_CONST, \
     SUBTASK_EMBED_CONST
 from helper.common_helper import CommonHelper
@@ -100,17 +100,39 @@ class MyTestCase(unittest.TestCase):
 
         # You might have to change in between MODEL_CONST and TEST_PROD_CONST depending on which provider you are using.
         self.message.role.model = TEST_PROD_CONST.COMPLETIONS
+        # self.message.role.model = MODEL_CONST.GPT4
+
         self.message.role.task = TASK_CONST.CONNECT
         self.message.role.subtask = SUBTASK_CONST.RESPONSE
 
-        self.message.messages = [
-            {"role": "system",
-             "content": "You are a helpful, fun and friendly sales assistant for Cosmic Works, a bicycle and bicycle "
-                        "accessories store."},
-            {"role": "user", "content": "Do you sell bicycles?"},
-            {"role": "assistant", "content": "Yes, we do sell bicycles. What kind of bicycle are you looking for?"},
-            {"role": "user", "content": "I'm not sure what I'm looking for. Could you help me decide?"}
+        # self.message.messages = [
+        #     {"role": "system",
+        #      "content": "You are a helpful, fun and friendly sales assistant for Cosmic Works, a bicycle and bicycle "
+        #                 "accessories store."},
+        #     {"role": "user", "content": "Do you sell bicycles?"},
+        #     {"role": "assistant", "content": "Yes, we do sell bicycles. What kind of bicycle are you looking for?"},
+        #     {"role": "user", "content": "I'm not sure what I'm looking for. Could you help me decide?"}
+        # ]
+        
+        # self.message.messages = [
+        #     {"role": "system",
+        #      "content": "You are a helpful, fun and friendly sales assistant for Cosmic Works, a bicycle and bicycle "
+        #                 "accessories store."},
+        #     {"role": "user", "content": "Do you sell bicycles?"},
+        #     {"role": "assistant", "content": "Yes, we do sell bicycles. What kind of bicycle are you looking for?"},
+        #     {"role": "user", "content": "I'm not sure what I'm looking for. Could you help me decide?"}
+        # ]
+        
+        self.message.messages =  [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": "Who won the world series in 2020?"},
+            {
+                "role": "assistant",
+                "content": "The Los Angeles Dodgers won the World Series in 2020.",
+            },
+            {"role": "user", "content": "Where was it played?"},
         ]
+        print('test_1')
 
         self.message.task_completed = False
         self.message.subtask_completed = False
@@ -201,7 +223,7 @@ class MyTestCase(unittest.TestCase):
         authy = AuthPojo(self.config)
         read_obj = ReadIdPojo()
 
-        read_obj._id = ObjectId("6662786b720a7fea8f2df4f1")  # or change this value to an existing objectID in coll
+        read_obj._id = ObjectId('6665e8a5ca03ca869df21602')  # or change this value to an existing objectID in coll
 
         self.message.read_ids.append(read_obj)
         self.message.role.task = TASK_CONST.DATABASE
@@ -243,7 +265,7 @@ class MyTestCase(unittest.TestCase):
             biography="Loves pineapple on pizza."
         )
 
-        read_obj._id = ObjectId("6662786b720a7fea8f2df4f1")
+        read_obj._id = ObjectId('6667181f66b9db9717fb76b9')
         set_obj.update(amends)
         self.message.read_ids.append(read_obj)
 
@@ -281,7 +303,7 @@ class MyTestCase(unittest.TestCase):
         authy = AuthPojo(self.config)
         read_obj = ReadIdPojo()
 
-        read_obj._id = ObjectId("6662786b720a7fea8f2df4f1")  # or change this value to something in ur collection
+        read_obj._id = ObjectId('44873725-7B3B-4B28-804D-963D2D62E761')  # or change this value to something in ur collection
 
         self.message.read_ids.append(read_obj)
         self.message.role.task = TASK_CONST.DATABASE
@@ -357,8 +379,10 @@ class MyTestCase(unittest.TestCase):
         authy = AuthPojo(self.config)
 
         self.message.embed_message = "Hello world!"
-
-        self.message.role.emebddings = TEST_PROD_CONST.EMBEDDINGS
+        
+        #Embeddings wyapb typo
+        self.message.role.embeddings = TEST_PROD_CONST.EMBEDDINGS
+        #Embeddings typo
         self.message.role.task = TASK_CONST.CONNECT
         self.message.role.subtask = SUBTASK_EMBED_CONST.GENERATE
 
@@ -377,7 +401,7 @@ class MyTestCase(unittest.TestCase):
 
         else:
             self.fail(f"Status fails true condition, value is {status}")
-
+    #
     def test_vectorize_and_update_db(self):
         """
         Tests the functionality of vectorizing data and updating documents in the database accordingly.
@@ -411,7 +435,7 @@ class MyTestCase(unittest.TestCase):
 
         else:
             self.fail(f"Status fails true condition, value is {status}")
-
+    
     def test_create_vector_index_db(self):
         """
         Tests the creation of a vector index in the database.
@@ -447,7 +471,7 @@ class MyTestCase(unittest.TestCase):
 
         else:
             self.fail(f"Status fails true condition, value is {status}")
-
+    
     def test_vector_search(self):
         """
         Tests the vector search functionality within the database.
@@ -488,7 +512,7 @@ class MyTestCase(unittest.TestCase):
 
         else:
             self.fail(f"Status fails true condition, value is {status}")
-
+    
     def test_create_response_with_context(self):
         """
         Tests the functionality of generating a context-aware response from the configured model, simulating a job
@@ -552,7 +576,8 @@ class MyTestCase(unittest.TestCase):
 
         else:
             self.fail(f"Status fails true condition, value is {status}")
-
+    
+    #Checkpoint
     def test_connect_to_langchain(self):
         authy = AuthPojo(self.config)
 
@@ -709,14 +734,20 @@ class MyTestCase(unittest.TestCase):
         
         Your name should be the job applicant's name.
 
-        Only answer questions related to the IDs.
+        Only answer questions related to the information provided below that are represented in JSON format.
 
         If you are asked a question that is not in the list, respond with "I don't know, but you can e-mail the 
         human version of me for more information!" or its equivalent.
         """
+        q = '666c5d730a67f8f8c3d7eecd'
 
-        self.message.query = "What can you tell me about ID 'kBix4APMK8UtqncG'"
+        query_suffix = "The ID is %s"%q
+        
+        self.message.query = "Can you introduce yourself to me? " + query_suffix
         self.message.k_search_value = 3
+        
+        #NOte: Need to uncomment (# result = agent_executor({"input": self.message.query})) in def create_agent in langchain_handler.py
+        #for this function (def test_create_langchain_agent) to work.
 
         status = AppHandler(authy, self.message).main()
 

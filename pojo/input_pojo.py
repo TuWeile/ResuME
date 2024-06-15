@@ -37,7 +37,7 @@ class InputPojo:
         self.langchain_exists: bool = False
 
         self.database_name: str = "cosmic_works"
-        self.collection_name: str = "products"
+        self.collection_name: str = "interviewee"
 
     def to_json(self):
         """
@@ -92,3 +92,10 @@ class CosmosIndexPojo:
         :return:  A dict object: a JSON version of the message POJO structure.
         """
         return vars(self)
+    
+class PromptInputPojo(BaseModel):
+    q: str = ""
+    prompt: str = ""
+    class Config:
+        allow_population_by_field_name = True
+    

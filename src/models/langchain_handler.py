@@ -6,6 +6,8 @@ import certifi
 import pymongo
 from bson import ObjectId
 from langchain.agents.agent_toolkits import create_conversational_retrieval_agent
+# from langchain_openai import AzureChatOpenAI
+# from langchain_openai import AzureOpenAIEmbeddings
 from langchain.chat_models import AzureChatOpenAI
 from langchain.embeddings import AzureOpenAIEmbeddings
 from langchain.vectorstores import AzureCosmosDBVectorSearch
@@ -63,7 +65,10 @@ class LangchainHandler(BaseHandler):
                     embedding=embedding_model,
                     index_name="VectorSearchIndex",
                     embedding_key="contentVector",
-                    text_key="_id"
+                    #Changed by wyapb
+                    # text_key="_id"
+                    text_key="id"
+                    #end change
                 )
 
                 self.message.langchain_exists = True
@@ -223,7 +228,7 @@ class LangchainHandler(BaseHandler):
         finally:
             return result
 
-    def get_entry_by_id(self, product_id: str) -> str:
+    def get_entry_by_id(self, id: str) -> str:
         """
         Retrieves an entry by its ID.
         :return: str
@@ -237,12 +242,15 @@ class LangchainHandler(BaseHandler):
             db = db_client[f"{self.message.database_name}"]
             collection = db[f"{self.message.collection_name}"]
 
-            doc = collection.find_one({"id": product_id})
+            doc = collection.find_one({"_id": ObjectId(id)})
 
             if "contentVector" in doc:
                 del doc["contentVector"]
 
+            doc["_id"] = str(doc["_id"])
+
             result = json.dumps(doc)
+            self.logger.debug(result)
 
         except Exception as bad_exception:
             self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: {bad_exception}")
@@ -261,8 +269,9 @@ class LangchainHandler(BaseHandler):
 
             agent_executor = create_conversational_retrieval_agent(self.client, tools, system_message=system_message,
                                                                    verbose=True)
-
-            result = agent_executor({"input": self.message.query})
+            #changed by wyapb
+            result = agent_executor
+            # result = agent_executor({"input": self.message.query})
 
         except Exception as bad_exception:
             self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: {bad_exception}")
@@ -317,7 +326,6 @@ class LangchainHandler(BaseHandler):
             else:
                 self.logger.warning(f"Class {class_name} of method {method_name}: {subtask} determined. "
                                     f"Unable to determine correct sub-tasking. Failing.")
-                result = self.create_agent()
                 self.message.subtask_completed = True
 
         except Exception as bad_exception:
