@@ -269,8 +269,9 @@ class LangchainHandler(BaseHandler):
 
             agent_executor = create_conversational_retrieval_agent(self.client, tools, system_message=system_message,
                                                                    verbose=True)
-
-            result = agent_executor({"input": self.message.query})
+            #changed by wyapb
+            result = agent_executor
+            # result = agent_executor({"input": self.message.query})
 
         except Exception as bad_exception:
             self.logger.error(f"Exception encountered in class {class_name} of method {method_name}: {bad_exception}")

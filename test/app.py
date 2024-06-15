@@ -9,13 +9,13 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from bson.objectid import ObjectId
 
-from constants.constants import TASK_CONST, SUBTASK_DB_CONST
+from constants.constants import TASK_CONST, SUBTASK_CONST, MODEL_CONST, SUBTASK_DB_CONST, TEST_PROD_CONST, SUBTASK_EMBED_CONST
 from helper.common_helper import CommonHelper
 from helper.config_helper import ConfigHelper
 from helper.file_helper import FileHelper
 from helper.logger_helper import LoggerHelper
 from pojo.auth_pojo import AuthPojo
-from pojo.input_pojo import InputPojo, ReadIdPojo, VectorIndexPojo
+from pojo.input_pojo import InputPojo, ReadIdPojo, VectorIndexPojo,PromptInputPojo
 from pojo.user_pojo import User
 from src.app.app_handler import AppHandler
 
@@ -86,7 +86,7 @@ def create_new_profile_bot(request: User):
             "user": request
         }
 
-# create function api endpoint to bypass forms at web app start up
+# GET create function api endpoint to bypass forms at web app start up
 @app.get("/api/chat")
 def get_profile_bot(q: str):
     authy = AuthPojo(config)
@@ -117,6 +117,102 @@ def get_profile_bot(q: str):
         return  result_dict
 # end new function
 
+# POST create function api endpoint to bypass forms at web app start up
+@app.post("/api/chat")
+def get_profile_bot(q: str):
+    authy = AuthPojo(config)
+    read_obj = ReadIdPojo()
+
+    read_obj._id = ObjectId(q)  # or change this value to an existing objectID in coll
+
+    message.read_ids.append(read_obj)
+    message.role.task = TASK_CONST.DATABASE
+    message.role.subtask = SUBTASK_DB_CONST.READ
+
+    message.task_completed = False
+    message.subtask_completed = False
+
+    status = AppHandler(authy, message).main()
+    result_dict ={
+        "status":"ok",
+        "message":"Received query parameter",
+        "q":q
+        }
+    var_status = vars(status)
+    result_dict['user'] = var_status
+    
+
+    if not message.done or not status:
+        return {"message":f"The task was not completed with self.message.done declared as {message.done} or status is None"}
+    else:
+        return  result_dict
+# end new function
+
+# POST create function to return prompt response
+@app.post("/api/prompt_response")
+def get_profile_bot(request: PromptInputPojo):
+    chat_agent = None
+    q = request.q
+    prompt = request.prompt
+    
+    if q not in agent_pool:
+        authy = AuthPojo(config)
+        message.role.model = TEST_PROD_CONST.COMPLETIONS
+        message.role.embeddings = TEST_PROD_CONST.EMBEDDINGS
+        message.role.task = TASK_CONST.LANGCHAIN
+        message.role.subtask = SUBTASK_CONST.CREATE_AGENT
+        
+        message.task_completed = False
+        message.subtask_completed = False
+        
+        message.prompt = """
+        You are a helpful, fun and friendly assistant emulating a person who is applying for a job.
+        You are designed to answer questions as to what a human interviewer would reasonably ask you.
+        Refrain from speaking in a third-person perspective and do not respond with anything that implies that you are 
+        an emulated assistant.
+        
+        Your name should be the job applicant's name.
+
+        Only answer questions related to the information provided below that are represented in JSON format.
+
+        If you are asked a question that is not in the list, respond with "I don't know, but you can e-mail the 
+        human version of me for more information!" or its equivalent.
+        """
+
+        query_suffix = "The ID is %s"%q
+        message.query = prompt + query_suffix
+        
+        message.k_search_value = 1
+
+        status = AppHandler(authy, message).main()
+        agent_pool[q] = status
+        chat_agent = status
+        
+    else:
+        query_suffix = "The ID is %s"%q
+        message.query = prompt + query_suffix
+        message.k_search_value = 1
+        chat_agent = agent_pool[q]
+    
+    output = chat_agent({"input": message.query})
+    # result.get("output")
+    
+    if not message.done or not output:
+        return {"message":f"The task was not completed with self.message.done declared as {message.done} or output is None"}
+    else:
+        return  {"output":output.get("output")}
+    
+    # return {"result":result.get("output")
+    #         # "agent_pool":agent_pool,
+    #         # "message.query":message.query
+    #         # "chat_agent":chat_agent
+    #         }
+
+
+# end new function
+
+
+# POST create document into the collection
 @app.post("/api/create")
 def create_new_profile_bot(request : User):
     
