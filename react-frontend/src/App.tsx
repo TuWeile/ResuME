@@ -7,7 +7,7 @@ import ChatBotPage from './frontend/pages/chatbotpage';
 const router= createBrowserRouter([
 
   {path:'/', element: <HomePage></HomePage>},
-  {path:'/chat', element: <HomePage></HomePage>},
+  {path:'/chat', element: <ChatBotPage></ChatBotPage>},
   {path:'/chatbot/*', element: <ChatBotPage></ChatBotPage>}
 ])
 
