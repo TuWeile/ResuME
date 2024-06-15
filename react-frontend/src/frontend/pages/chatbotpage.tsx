@@ -12,12 +12,12 @@ function ChatBotPage() {
     const leftRatio= 1;
     const midRatio= 2.5;
     const rightRatio= 0.8;
-  
+
     return (
         <div className="container" style={{flex: leftRatio}}>
             <div className="left-segment">
                 Navigation menu
-            </div>
+            </div>s
             <div className="mid-segment" style={{flex:midRatio}}>
                 <div className="taskbar">
                     WhatsApp like front goes here
@@ -32,6 +32,5 @@ function ChatBotPage() {
         </div>
     );
   };
-  
+
   export default ChatBotPage;
-  

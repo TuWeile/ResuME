@@ -284,7 +284,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
                 return (
                     <div className="form-step fade-in">
                         <img src="/logo.png" alt="Logo" className="form-logo" />
-                        <h2>Welcome!</h2>
+                        <h2>Welcome to ResuME!</h2>
                         <p>Please click "Next" to begin.</p>
                     </div>
                 );
