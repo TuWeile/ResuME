@@ -739,11 +739,15 @@ class MyTestCase(unittest.TestCase):
         If you are asked a question that is not in the list, respond with "I don't know, but you can e-mail the 
         human version of me for more information!" or its equivalent.
         """
+        q = '666c5d730a67f8f8c3d7eecd'
 
-        query_suffix = "The ID is '666af4d9ac7b51f73966fdbf'"
-
+        query_suffix = "The ID is %s"%q
+        
         self.message.query = "Can you introduce yourself to me? " + query_suffix
         self.message.k_search_value = 3
+        
+        #NOte: Need to uncomment (# result = agent_executor({"input": self.message.query})) in def create_agent in langchain_handler.py
+        #for this function (def test_create_langchain_agent) to work.
 
         status = AppHandler(authy, self.message).main()
 

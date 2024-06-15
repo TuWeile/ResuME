@@ -92,3 +92,10 @@ class CosmosIndexPojo:
         :return:  A dict object: a JSON version of the message POJO structure.
         """
         return vars(self)
+    
+class PromptInputPojo(BaseModel):
+    q: str = ""
+    prompt: str = ""
+    class Config:
+        allow_population_by_field_name = True
+    
