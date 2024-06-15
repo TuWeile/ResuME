@@ -5,7 +5,7 @@
     text-align: center; /* Center content within the form step */
 }
 
-.logo {
+.form-logo {
     display: block;
     margin: 0 auto 20px; /* Center the logo and add some bottom margin */
     max-width: 100px; /* Adjust the size of the logo */

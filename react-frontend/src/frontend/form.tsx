@@ -8,7 +8,7 @@ interface MultiStepFormProps {
     onComplete: () => void;
 }
 
-const countries = ["United States", "Canada", "United Kingdom", "Australia", "Germany", "France", "India", "China", "Japan", "Mexico"];
+const countries = ["United States", "Canada", "United Kingdom", "Australia", "Germany", "France", "India", "China", "Japan", "Mexico", "Singapore", "Malaysia", "Indonesia", "Thailand"];
 
 const behaviouralQuestions = [
     "Describe a time you faced a challenge at work.",
@@ -283,7 +283,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onComplete }) => {
             case 0:
                 return (
                     <div className="form-step fade-in">
-                        <img src="/logo.png" alt="Logo" className="logo" />
+                        <img src="/logo.png" alt="Logo" className="form-logo" />
                         <h2>Welcome!</h2>
                         <p>Please click "Next" to begin.</p>
                     </div>

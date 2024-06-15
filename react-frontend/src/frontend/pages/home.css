@@ -16,10 +16,6 @@
   flex-direction: column;
 }
 
-.right-segment {
-  background-color: lightcoral;
-}
-
 .taskbar {
   height: 15vh; /* Adjust the height as needed */
   background-color: darkgrey;
