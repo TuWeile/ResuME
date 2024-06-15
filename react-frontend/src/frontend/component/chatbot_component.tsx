@@ -1,39 +1,47 @@
 // src/Chatbot.tsx
-import React, { useState, ChangeEvent, KeyboardEvent, FC, CSSProperties, useEffect } from 'react';
+import React, { useState, ChangeEvent, KeyboardEvent, FC, CSSProperties } from 'react';
+import axios from 'axios';
 
 interface Message {
   text: string;
   sender: 'bot' | 'user';
 }
 
-
 const Chatbot: FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     { text: 'Hello! How can I help you today?', sender: 'bot' }
   ]);
   const [input, setInput] = useState<string>('');
-  const url=window.location.href.split('/')
+  const url=window.location.href.split('=')
   const lenurl=url.length-1
-  const uniqueurl=url[lenurl]
+  const q=url[lenurl]
+
+
+  const backend_service_name="backend"
+  const backendUrl='http://'+backend_service_name+':4242/api/prompt_response'
 
 
 
-//   useEffect()
-// use useeffect to handle the loading of informaiton and make initial api call to get use info
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim() !== '') {
-      setMessages([...messages, { text: input, sender: 'user' }]);
+      const userMessage: Message = { text: input, sender: 'user' };
+      setMessages([...messages, userMessage]);
       setInput('');
 
-      // Simulate a bot response
-      // replace with api call
-      setTimeout(() => {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { text: 'This is a static response from the bot.', sender: 'bot' }
-        ]);
-      }, 1000);
+      try {
+        const response = await axios.post('http://127.0.0.1:4242/api/prompt_response', {
+          q: q.toString(),
+          prompt: input,
+        });
+
+        const botMessage: Message = { text: response.data.output, sender: 'bot' };
+        setMessages((prevMessages) => [...prevMessages, botMessage]);
+      } catch (error) {
+        console.error('Error sending message to the backend:', error);
+        const botErrorMessage: Message = { text: 'Sorry, there was an error processing your message.', sender: 'bot' };
+        setMessages((prevMessages) => [...prevMessages, botErrorMessage]);
+      }
     }
   };
 
@@ -54,11 +62,18 @@ const Chatbot: FC = () => {
           <div
             key={index}
             style={{
-              ...styles.message,
-              ...(message.sender === 'bot' ? styles.botMessage : styles.userMessage)
+              ...styles.messageContainer,
+              ...(message.sender === 'bot' ? styles.botMessageContainer : styles.userMessageContainer)
             }}
           >
-            {message.text}
+            <div
+              style={{
+                ...styles.message,
+                ...(message.sender === 'bot' ? styles.botMessage : styles.userMessage)
+              }}
+            >
+              {message.text}
+            </div>
           </div>
         ))}
       </div>
@@ -80,50 +95,62 @@ const Chatbot: FC = () => {
 
 const styles: { [key: string]: CSSProperties } = {
   container: {
-    backgroundColor:'',
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
     height: '100%',
 
-    overflow: 'hidden',
   },
   chatWindow: {
     flex: 1,
     padding: '10px',
-    overflowY: 'scroll',
+
+  },
+  messageContainer: {
+    display: 'flex',
+    marginBottom: '10px',
+    width: '100%',
+  },
+  botMessageContainer: {
+    justifyContent: 'flex-start',
+  },
+  userMessageContainer: {
+    justifyContent: 'flex-end',
   },
   message: {
     padding: '10px',
-    margin: '5px 0',
     borderRadius: '4px',
+    display: 'inline-block',
     maxWidth: '80%',
+    wordWrap: 'break-word', // Wrap long words
   },
   botMessage: {
-    backgroundColor: '#f1f0f0',
-    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(224,224,224,255)',
   },
   userMessage: {
-    backgroundColor: '#0084ff',
+    backgroundColor: 'rgba(0,0,0,255)',
     color: 'white',
-    alignSelf: 'flex-end',
+    textAlign: 'right',
   },
   inputContainer: {
     display: 'flex',
-    borderTop: '1px solid #ccc',
+
   },
   input: {
     flex: 1,
-    padding: '10px',
+
     border: 'none',
     borderTop: '1px solid #ccc',
+    borderRadius: '4px',
+    height: "100%"
   },
   sendButton: {
-    padding: '10px',
+
     border: 'none',
     backgroundColor: '#0084ff',
     color: 'white',
     cursor: 'pointer',
+    height: "100%"
   },
 };
 

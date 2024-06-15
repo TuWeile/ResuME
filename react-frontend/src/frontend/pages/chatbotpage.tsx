@@ -9,9 +9,9 @@ function ChatBotPage() {
 
 
 
-    const leftRatio= 1;
+    const leftRatio= 1.5;
     const midRatio= 2.5;
-    const rightRatio= 0.8;
+    const rightRatio= 1.5;
   
     return (
         <div className="container" style={{flex: leftRatio}}>
