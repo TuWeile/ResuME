@@ -11,33 +11,12 @@
     border: 1px solid #2e2e2e;
 }
 
-.left-segment {
-    background-color: lightblue;
-    text-align: center;
-}
-
 .middle-segment {
     background-color: lightgreen;
 }
 
-
-.right-segment {
-    background-color: lightcoral;
-    text-align: center;
-}
-
-.taskbar {
-    height: 15vh; /* Adjust the height as needed */
-    background-color: darkgrey;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid #2e2e2e;
-  }
-
   .chatbot {
-    height: 85vh; /* Adjust the height as needed */
+    height: 90vh; /* Adjust the height as needed */
     background-color: rgb(198, 180, 240);
     padding: 5px;
     display: flex;
