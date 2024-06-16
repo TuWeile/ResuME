@@ -20,20 +20,21 @@ class LoggerHelper:
         self.log_file = logfile_path
         self.logger = logging.getLogger(f"{self.__class__.__name__}_{id(self)}")
         self.logger.setLevel(logging.DEBUG)
+        
+        # Commented out when online deployment
+        # if not self.logger.handlers:
+        #     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
-        if not self.logger.handlers:
-            formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        #     try:
+        #         file_handler = logging.FileHandler(logfile_path)
+        #     except FileNotFoundError as e:
+        #         print(f"Discrepancy detected in filepath. Calibrating to existing file directory...")
+        #         file_handler = logging.FileHandler(logfile_path[1:])
 
-            try:
-                file_handler = logging.FileHandler(logfile_path)
-            except FileNotFoundError as e:
-                print(f"Discrepancy detected in filepath. Calibrating to existing file directory...")
-                file_handler = logging.FileHandler(logfile_path[1:])
+        #     file_handler.setLevel(logging.DEBUG)
+        #     file_handler.setFormatter(formatter)
 
-            file_handler.setLevel(logging.DEBUG)
-            file_handler.setFormatter(formatter)
-
-            self.logger.addHandler(file_handler)
+        #     self.logger.addHandler(file_handler)
 
     def __del__(self) -> None:
         """
