@@ -51,17 +51,26 @@ class ModelHandler(BaseHandler):
     def get_response(self):
         class_name = self.__class__.__name__
         method_name = inspect.currentframe().f_code.co_name
-        response = None
+        response = None 
+        # print("get_res_1")
 
         try:
             if self.message and self.client:
                 message = self.message.to_json()
                 role = message.get("role", {}).to_json()
+                messages=message.get("messages", [{}])
+                # print("msg_role_1:",messages)
+                # # print("msg_role_2:",role)
+                # print("self.client",self.client)
 
                 response = self.client.chat.completions.create(
-                    model=role.get("model", "gpt-4").value,
+                    # model=role.get("model", "gpt-4").value,
+                    model=role.get("model", "completions").value,
+                    # model = "completions",
                     messages=message.get("messages", [{}])
                 )
+                # print('res_2')
+                # print('response',response)
 
                 self.message.last_message = response.choices[0].message.content
 
@@ -74,10 +83,14 @@ class ModelHandler(BaseHandler):
         finally:
             return response
 
+    # def generate_embeddings(self, message: str = None):
     def generate_embeddings(self, message: str = None):
         class_name = self.__class__.__name__
         method_name = inspect.currentframe().f_code.co_name
         result = None
+        #Added by wyapb
+        # print(self.message.role.embeddings.value)
+        #End add
 
         try:
             input_msg = message or self.message.embed_message

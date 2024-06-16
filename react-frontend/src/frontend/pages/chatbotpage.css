@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+.left-segment, .middle-segment, .right-segment {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #2e2e2e;
+}

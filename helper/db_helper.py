@@ -73,6 +73,7 @@ class DBHelper:
                               f"{bad_exception}")
 
         finally:
+            print("instance_id",instance_id)
             return instance_id
 
     def read_one_document(self, read: List[ReadIdPojo]):
@@ -90,14 +91,23 @@ class DBHelper:
             if len(read) > 1:
                 self.logger.info(f"Class {class_name} of method {method_name}: Taking the latest entry as document.")
                 read = read.pop().to_json()
+                #Added by wyapb
+                read = read['_id']
+                #end add
 
             elif len(read) == 1:
                 read = read[0].to_json()
+                #Added by wyapb
+                read = read['_id']
+                #end add
 
             else:
                 raise Exception("Empty read object given.")
             
             retrieved_doc = self.collection.find_one(read)
+            
+            if not retrieved_doc:
+                return None
             
             if retrieved_doc:
                 self.logger.info(f"Class {class_name} of method {method_name}: Successfully retrieved document from "
@@ -298,6 +308,9 @@ class DBHelper:
                 ]
 
                 result = self.collection.aggregate(pipeline)
+                #Added by wyapb , result now returns a of top num_results similarity searches
+                # result = result._CommandCursor__data
+                ##End add
 
             elif not client:
                 self.logger.warning(f"Class {class_name} of method {method_name}: Unable to obtain client.")
