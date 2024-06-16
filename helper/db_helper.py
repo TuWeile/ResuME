@@ -106,6 +106,9 @@ class DBHelper:
             
             retrieved_doc = self.collection.find_one(read)
             
+            if not retrieved_doc:
+                return None
+            
             if retrieved_doc:
                 self.logger.info(f"Class {class_name} of method {method_name}: Successfully retrieved document from "
                                  f"ID {read}.")  # FIXME: preferably to include ID in the future.

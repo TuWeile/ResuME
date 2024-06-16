@@ -148,7 +148,7 @@ const ThreeSegmentLayout: React.FC<ThreeSegmentLayoutProps> = ({ leftRatio, midR
                         <p className="profile-date">Created on {formatDate(userData.created_at)}</p>
                         <button className="view-profile-button" onClick={handleViewProfileClick}>View Profile</button>
                         <button className="profile-action-button" onClick={handleEmailClick}>
-                            <i className="fas fa-envelope"></i> E-mail John
+                            <i className="fas fa-envelope"></i> E-mail {userData.personalInfo.first_name}
                         </button>
                         <button className="profile-action-button" onClick={handleViewAttachmentsClick}>
                             <i className="fas fa-paperclip"></i> View attachments
@@ -197,7 +197,7 @@ const ThreeSegmentLayout: React.FC<ThreeSegmentLayoutProps> = ({ leftRatio, midR
                                 <li>Chong Jun Hao <a href={"https://www.linkedin.com/in/xiuqun-cui/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
                                 <li>Cui Xiuqun <a href={"https://www.linkedin.com/in/xiuqun-cui/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
                                 <li>Tu Weile <a href={"https://www.linkedin.com/in/tuweile/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
-                                <li>Yap Wei Xuan <a href={"https://www.linkedin.com/in/xiuqun-cui/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
+                                <li>Yap Wei Xuan <a href={"https://www.linkedin.com/in/yap-wei-xuan-844106158"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
                             </ul>
                         </div>
                     </div>
