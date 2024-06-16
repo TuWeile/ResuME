@@ -24,7 +24,8 @@ app = FastAPI()
 file_helper = FileHelper()
 common_helper = CommonHelper()
 config_helper = ConfigHelper()
-logger = LoggerHelper(logfile_path="C:/Users/flame/OneDrive/Documents/Microsoft Hackerthon/microsoftHackathon/var/log/new_log.txt")
+# NOTe: Commented out ALL logger call functions in this page for online deployment
+# logger = LoggerHelper(logfile_path="C:/Users/flame/OneDrive/Documents/Microsoft Hackerthon/microsoftHackathon/var/log/new_log.txt")
 message = InputPojo()
 
 config = config_helper.read_ini(file_helper.resolve_path("config.ini", 1))
@@ -72,14 +73,14 @@ def create_new_profile_bot(request: User):
     status = AppHandler(authy, message).main()
 
     if message.done and isinstance(status, ObjectId):
-        logger.debug(f"Received and processed API request to create new profile: {request}. Status: {str(status)}")
+        # logger.debug(f"Received and processed API request to create new profile: {request}. Status: {str(status)}")
         return {
             "status": "ok",
             "message": "Profile returned successfully",
             "user": request,
             "identifier": str(status)}
     else:
-        logger.warning(f"Failed API request due to parameters message.done: [{message.done}] status: [{status}]")
+        # logger.warning(f"Failed API request due to parameters message.done: [{message.done}] status: [{status}]")
         return {
             "status": "fail",
             "message": "Unable to process request due to failed internal parameters from backend.",
@@ -259,14 +260,14 @@ def create_new_profile_bot(request : User):
     status = AppHandler(authy, message).main()
 
     if message.done and isinstance(status,ObjectId):
-        logger.debug(f"Received and processed API request to create new profile: {request}. Status: {str(status)}")
+        # logger.debug(f"Received and processed API request to create new profile: {request}. Status: {str(status)}")
         return {
             "status": "ok",
             "message": "Profile returned successfully",
             "user":request,
             "identifier":str(status)}
     else:
-        logger.warning(f"Failed API request due to parameters message.done: [{message.done}] status: [{status}]")
+        # logger.warning(f"Failed API request due to parameters message.done: [{message.done}] status: [{status}]")
         return{
             "status":"fail",
             "message":"Unable to process request due to failed internal parameters from backend.",
