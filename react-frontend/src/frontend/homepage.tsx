@@ -194,7 +194,7 @@ const ThreeSegmentLayout: React.FC<ThreeSegmentLayoutProps> = ({ leftRatio, midR
                         <div className="about-us-content">
                             <h3>Team members</h3>
                             <ul>
-                                <li>Chong Jun Hao <a href={"https://www.linkedin.com/in/xiuqun-cui/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
+                                <li>Chong Jun Hao <a href={"https://www.linkedin.com/in/jun-hao-chong-7a5a1211a/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
                                 <li>Cui Xiuqun <a href={"https://www.linkedin.com/in/xiuqun-cui/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
                                 <li>Tu Weile <a href={"https://www.linkedin.com/in/tuweile/"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>
                                 <li>Yap Wei Xuan <a href={"https://www.linkedin.com/in/yap-wei-xuan-844106158"} target={"_blank"} rel={"noopener noreferrer"}><i className="fab fa-linkedin linkedin-icon"></i></a></li>

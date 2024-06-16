@@ -212,9 +212,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 <!-- CONTACT -->
 ## Contact
-* Chong Jun Hao - LinkedIn
+* Chong Jun Hao - [LinkedIn](https://www.linkedin.com/in/jun-hao-chong-7a5a1211a)
 * Cui Xiuqun - [LinkedIn](https://www.linkedin.com/in/xiuqun-cui/)
-* Tu Weile - [LinkedIn][linkedin-url] - tuweile.sg@gmail.com
+* Tu Weile - [LinkedIn][linkedin-url]
 * Yap Wei Xuan - [LinkedIn](http://www.linkedin.com/in/yap-wei-xuan-844106158)
 
 Project Link: [https://github.com/TuWeile/microsoftHackathon](https://github.com/TuWeile/microsoftHackathon)
