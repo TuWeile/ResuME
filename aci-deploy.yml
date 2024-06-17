@@ -1,0 +1,12 @@
+version: '3'
+services:
+  frontend:
+    image: dummy.azurecr.io/resume-frontend:v1
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+  backend:
+    image: dummy.azurecr.io/resume-backend:v1
+    ports:
+      - "4242:80"
