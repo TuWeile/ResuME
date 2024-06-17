@@ -21,7 +21,7 @@ class LoggerHelper:
         self.logger = logging.getLogger(f"{self.__class__.__name__}_{id(self)}")
         self.logger.setLevel(logging.DEBUG)
         
-        # Commented out when online deployment
+        #Commented out when online deployment
         # if not self.logger.handlers:
         #     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 

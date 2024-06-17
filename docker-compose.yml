@@ -1,10 +1,23 @@
 version: '3'
 services:
   frontend:
-    build: ./react-frontend
-    ports: 
+    image: dgvbti3xixaqpysregistry.azurecr.io/mhfrontend-api:v1
+    ports:
       - "3000:80"
+    depends_on:
+      - backend
   backend:
-    build: ./
+    image: dgvbti3xixaqpysregistry.azurecr.io/mhbackendapi:v1
     ports:
       - "4242:80"
+
+# version: '3'
+# services:
+#   frontend:
+#     build: ./react-frontend
+#     ports: 
+#       - "3000:80"
+#   backend:
+#     build: ./
+#     ports:
+#       - "4242:80"
