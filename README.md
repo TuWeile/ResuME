@@ -209,10 +209,10 @@ backend is located. Run the following command in the Terminal.
 registry. You may initialize your environment with this command too.
   ```shell
   az containerapp up --name resume-backend \
-                    --image <registry-name>.azurecr.io/resu.me-backend:1.0 \
-                    --resource-group <resource-group> \
-                    --environment <environment-name> \
-                    --ingress external
+                     --image <registry-name>.azurecr.io/resu.me-backend:1.0 \
+                     --resource-group <resource-group> \
+                     --environment <environment-name> \
+                     --ingress external
   ```
 
 11. In Azure Web Portal, go to `resume-backend` Container App from your resource group and obtain the Application URL.
@@ -236,10 +236,10 @@ another Dockerfile for the React-TS frontend is located. Run the following comma
   docker push <registry-name>.azurecr.io/resu.me-frontend:1.0
   
   az containerapp up --name resume-frontend \
-                    --image <registry-name>.azurecr.io/resu.me-frontend:1.0 \
-                    --resource-group <resource-group> \
-                    --environment <environment-name> \
-                    --ingress external
+                     --image <registry-name>.azurecr.io/resu.me-frontend:1.0 \
+                     --resource-group <resource-group> \
+                     --environment <environment-name> \
+                     --ingress external
   ```
 
 15. In Azure Web Portal, go to `resume-frontend` Container App from your resource group and obtain the Application URL. 
