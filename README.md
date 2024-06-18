@@ -215,7 +215,7 @@ registry. You may initialize your environment with this command too.
                     --ingress external
   ```
 
-11. In Azure Web Portal, go to `resume-backend` Container App from your resource group and obtain the Application Url.
+11. In Azure Web Portal, go to `resume-backend` Container App from your resource group and obtain the Application URL.
   ```text
   https://resume-backend.<identifier>.eastus.azurecontainerapps.io
   ```
