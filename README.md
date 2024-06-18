@@ -135,24 +135,24 @@ generated from [Azure](https://portal.azure.com/).
 1. Copy the OpenAI key and endpoints along with your Azure CosmoDB connection string into `config.ini`.
 2. Using your Terminal, change your directory to the directory `microsoftHackathon` where the Dockerfile for the Python 
 backend is located. Run the following command in the Terminal.
-    ```shell
-    docker build --pull --rm -f "Dockerfile" -t devguidebackendapi:latest "."
-    ```
+  ```shell
+  docker build --pull --rm -f "Dockerfile" -t devguidebackendapi:latest "."
+  ```
 3. Within that same directory, use your Terminal to change your directory to the directory `react-frontend` where
 another Dockerfile for the React-TS frontend is located. Run the following command in the Terminal.
-    ```shell
-    docker build -t resu.me-frontend:1.0 .
-    ```
+  ```shell
+  docker build -t resu.me-frontend:1.0 .
+  ```
 4. With both images installed, first initialize the Python backend service by entering the following command in the
 Terminal. Ensure that port 4242 is open.
-    ```shell
-    docker run -d -p 4242:80 --name devguide-backend-api devguidebackendapi:latest
-    ```
+  ```shell
+  docker run -d -p 4242:80 --name devguide-backend-api devguidebackendapi:latest
+  ```
 5. With the Python backend service initialized, enter the next following command in the Terminal. Ensure that port 
 3000 is open.
-    ```shell
-    docker run -d -p 3000:80 --name resu.me-frontend resu.me-frontend:1.0
-    ```
+  ```shell
+  docker run -d -p 3000:80 --name resu.me-frontend resu.me-frontend:1.0
+  ```
 6. Once both containers have been initialized and are running, go to http://localhost:3000 to interact with the 
 application.
 
@@ -162,9 +162,9 @@ application.
 1. Copy the OpenAI key and endpoints along with your Azure CosmosDB connection string into `config.ini`.
 2. Using your Terminal, change your directory to the directory `microsoftHackathon` where the project is located. Run 
 the following command in the Terminal.
-    ```shell
-    docker-compose up
-    ```
+  ```shell
+  docker-compose up
+  ```
 3. You should observe both `microsofthackathon-frontend` and `microsoft-backend` container initialized and running. Go 
 to http://localhost:3000 to interact with the application.
 
@@ -177,90 +177,90 @@ as of Jun 2024. Ensure that you ideally have a Windows AMD64 OS for deployment, 
 2. Ensure that you have [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) installed within your
 computer along with a valid Azure account.
 3. With your Azure CLI, login to Azure with:
-    ```shell
-   az login
-    ```
+  ```shell
+  az login
+  ```
 4. If you do not have an existing Azure Container Registry, create a registry with:
-    ```shell
-    az acr create --resource-group <resource-group> --name <registry-name> --sku Basic
-    ```
+  ```shell
+  az acr create --resource-group <resource-group> --name <registry-name> --sku Basic
+  ```
 5. Login into your Azure Container Registry:
-   ```shell
-   az acr login --name <registry-name>
-   ```
+  ```shell
+  az acr login --name <registry-name>
+  ```
 6. Using your Terminal, change your directory to the directory `microsoftHackathon` where the Dockerfile for the Python 
 backend is located. Run the following command in the Terminal.
-   ```shell
-    docker build --pull --rm -f "Dockerfile" -t resu.me-backend:1.0 "."
-   ```
+  ```shell
+  docker build --pull --rm -f "Dockerfile" -t resu.me-backend:1.0 "."
+  ```
 7. Tag your docker image by replacing `<registry-name>` with your Azure Container Registry name.
-   ```shell
-    docker tag resu.me-backend:1.0 <registry-name>.azurecr.io/resu.me-backend:1.0
-   ```
+  ```shell
+  docker tag resu.me-backend:1.0 <registry-name>.azurecr.io/resu.me-backend:1.0
+  ```
 8. Push your Python backend Docker image to Azure Container Registry.
-   ```shell
-   docker push <registry-name>.azurecr.io/resu.me-backend:1.0
-   ```
+  ```shell
+  docker push <registry-name>.azurecr.io/resu.me-backend:1.0
+  ```
 9. Add the extension `containerapp` in order to prepare initialization of container applications on Azure.
-   ```shell
-   az extension add --name containerapp --upgrade
-   ```
+  ```shell
+  az extension add --name containerapp --upgrade
+  ```
 10. Initialize your container application with the Python backend Docker image that was pushed into Azure Container 
 registry. You may initialize your environment with this command too.
-   ```shell
-   az containerapp up --name resume-backend \
-                      --image <registry-name>.azurecr.io/resu.me-backend:1.0 \
-                      --resource-group <resource-group> \
-                      --environment <environment-name> \
-                      --ingress external
-   ```
+  ```shell
+  az containerapp up --name resume-backend \
+                    --image <registry-name>.azurecr.io/resu.me-backend:1.0 \
+                    --resource-group <resource-group> \
+                    --environment <environment-name> \
+                    --ingress external
+  ```
 
 11. In Azure Web Portal, go to `resume-backend` Container App from your resource group and obtain the Application Url.
-   ```text
-   https://resume-backend.<identifier>.eastus.azurecontainerapps.io
-   ```
+  ```text
+  https://resume-backend.<identifier>.eastus.azurecontainerapps.io
+  ```
 
 12. Within this project, refactor all `http://localhost:4242` mentions into `https://resume-backend.<identifier>.eastus.azurecontainerapps.io`.
 This will ensure that your frontend will map correctly to your running backend application on Azure.
 
 13. Within that project, use your Terminal to change your directory to the directory `react-frontend` where
 another Dockerfile for the React-TS frontend is located. Run the following command in the Terminal.
-    ```shell
-    docker build -t resu.me-frontend:1.0 .
-    ```
+  ```shell
+  docker build -t resu.me-frontend:1.0 .
+  ```
 
 14. Repeat step 7 to step 10 with the shell commands in Terminal:
-   ```shell
-   docker tag resu.me-frontend:1.0 <registry-name>.azurecr.io/resu.me-frontend:1.0
+  ```shell
+  docker tag resu.me-frontend:1.0 <registry-name>.azurecr.io/resu.me-frontend:1.0
+  
+  docker push <registry-name>.azurecr.io/resu.me-frontend:1.0
+  
+  az containerapp up --name resume-frontend \
+                    --image <registry-name>.azurecr.io/resu.me-frontend:1.0 \
+                    --resource-group <resource-group> \
+                    --environment <environment-name> \
+                    --ingress external
+  ```
 
-   docker push <registry-name>.azurecr.io/resu.me-frontend:1.0
-
-   az containerapp up --name resume-frontend \
-                      --image <registry-name>.azurecr.io/resu.me-frontend:1.0 \
-                      --resource-group <resource-group> \
-                      --environment <environment-name> \
-                      --ingress external
-   ```
-
-15. In Azure Web Portal, go to `resume-frontend` Container Apop from your resource group and obtain the Application Url. 
+15. In Azure Web Portal, go to `resume-frontend` Container App from your resource group and obtain the Application URL. 
 You can now access the application from there.
-   ```text
-   https://resume-frontend.<identifier>.eastus.azurecontainerapps.io
-   ```
+  ```text
+  https://resume-frontend.<identifier>.eastus.azurecontainerapps.io
+  ```
 
 16. Should you require a static webapp hostname, create an Azure Web App interface and type out your preferred domain. 
 Ensure that your configurations are set to deploy <b>containers</b>. Your hostname should look like this:
-   ```text
-   https://<desired-hostname>.azurewebsites.net/
-   ```
+  ```text
+  https://<desired-hostname>.azurewebsites.net/
+  ```
 
 17. In the container step, select your configuration as follows.
-      ```text
-      Container Type:   Docker Compose (Preview)
-      Registry source:  Azure Container Registry
-      Registry:         <registry-name>
-      Config:           Attach aci-deploy.yml
-      ```
+  ```text
+  Container Type:   Docker Compose (Preview)
+  Registry source:  Azure Container Registry
+  Registry:         <registry-name>
+  Config:           Attach aci-deploy.yml
+  ```
 
 18. From `https://<desired-hostname>.azurewebsites.net/`, you can now access your application online.
 
