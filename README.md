@@ -35,7 +35,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/TuWeile/microsoftHackathon">
+  <a href="https://github.com/TuWeile/ResuME">
     <img src="resources/git-new-logo.png" alt="Logo" width="648" height="432">
   </a>
 
@@ -44,14 +44,14 @@
   <p align="center">
     OpenAI chatbot emulator of job applicants with Azure CosmosDB and Langchain
     <br />
-    <a href="https://github.com/TuWeile/microsoftHackathon"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/TuWeile/ResuME"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/TuWeile/microsoftHackathon">Documentation</a>
+    <a href="https://github.com/TuWeile/ResuME">Documentation</a>
     ·
-    <a href="https://github.com/TuWeile/microsoftHackathon/issues">Report Bug</a>
+    <a href="https://github.com/TuWeile/ResuME/issues">Report Bug</a>
     ·
-    <a href="https://github.com/TuWeile/microsoftHackathon/issues">Request Feature</a>
+    <a href="https://github.com/TuWeile/ResuME/issues">Request Feature</a>
   </p>
 </div>
 
@@ -88,7 +88,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Illustration of Chatbot Demo][product-screenshot]](https://github.com/TuWeile/microsoftHackathon)
+[![Illustration of Chatbot Demo][product-screenshot]](https://github.com/TuWeile/ResuME)
 
 This repository serves in fulfillment of the requirements for the [Microsoft Develops AI Learning Hackathon 2024 in 
 Devpost][hackathon-url], where developers are expected to integrate their custom AI co-pilot developed during Phase 1
@@ -133,7 +133,7 @@ generated from [Azure](https://portal.azure.com/).
 
 #### Without Docker Compose
 1. Copy the OpenAI key and endpoints along with your Azure CosmoDB connection string into `config.ini`.
-2. Using your Terminal, change your directory to the directory `microsoftHackathon` where the Dockerfile for the Python 
+2. Using your Terminal, change your directory to the directory `ResuME` where the Dockerfile for the Python 
 backend is located. Run the following command in the Terminal.
   ```shell
   docker build --pull --rm -f "Dockerfile" -t devguidebackendapi:latest "."
@@ -160,12 +160,12 @@ application.
 
 #### With Docker Compose
 1. Copy the OpenAI key and endpoints along with your Azure CosmosDB connection string into `config.ini`.
-2. Using your Terminal, change your directory to the directory `microsoftHackathon` where the project is located. Run 
+2. Using your Terminal, change your directory to the directory `ResuME` where the project is located. Run 
 the following command in the Terminal.
   ```shell
   docker-compose up
   ```
-3. You should observe both `microsofthackathon-frontend` and `microsoft-backend` container initialized and running. Go 
+3. You should observe both `ResuME-frontend` and `microsoft-backend` container initialized and running. Go 
 to http://localhost:3000 to interact with the application.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -188,7 +188,7 @@ computer along with a valid Azure account.
   ```shell
   az acr login --name <registry-name>
   ```
-6. Using your Terminal, change your directory to the directory `microsoftHackathon` where the Dockerfile for the Python 
+6. Using your Terminal, change your directory to the directory `ResuME` where the Dockerfile for the Python 
 backend is located. Run the following command in the Terminal.
   ```shell
   docker build --pull --rm -f "Dockerfile" -t resu.me-backend:1.0 "."
@@ -323,7 +323,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 * Tu Weile - [LinkedIn][linkedin-url]
 * Yap Wei Xuan - [LinkedIn](http://www.linkedin.com/in/yap-wei-xuan-844106158)
 
-Project Link: [https://github.com/TuWeile/microsoftHackathon](https://github.com/TuWeile/microsoftHackathon)
+Project Link: [https://github.com/TuWeile/ResuME](https://github.com/TuWeile/ResuME)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -341,16 +341,16 @@ Project Link: [https://github.com/TuWeile/microsoftHackathon](https://github.com
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/TuWeile/microsoftHackathon.svg?style=for-the-badge
-[contributors-url]: https://github.com/TuWeile/microsoftHackathon/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/TuWeile/microsoftHackathon.svg?style=for-the-badge
-[forks-url]: https://github.com/TuWeile/microsoftHackathon/network/members
-[stars-shield]: https://img.shields.io/github/stars/TuWeile/microsoftHackathon.svg?style=for-the-badge
-[stars-url]: https://github.com/TuWeile/microsoftHackathon/stargazers
-[issues-shield]: https://img.shields.io/github/issues/TuWeile/microsoftHackathon.svg?style=for-the-badge
-[issues-url]: https://github.com/TuWeile/microsoftHackathon/issues
-[license-shield]: https://img.shields.io/github/license/TuWeile/microsoftHackathon.svg?style=for-the-badge
-[license-url]: https://github.com/TuWeile/microsoftHackathon/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/TuWeile/ResuME.svg?style=for-the-badge
+[contributors-url]: https://github.com/TuWeile/ResuME/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/TuWeile/ResuME.svg?style=for-the-badge
+[forks-url]: https://github.com/TuWeile/ResuME/network/members
+[stars-shield]: https://img.shields.io/github/stars/TuWeile/ResuME.svg?style=for-the-badge
+[stars-url]: https://github.com/TuWeile/ResuME/stargazers
+[issues-shield]: https://img.shields.io/github/issues/TuWeile/ResuME.svg?style=for-the-badge
+[issues-url]: https://github.com/TuWeile/ResuME/issues
+[license-shield]: https://img.shields.io/github/license/TuWeile/ResuME.svg?style=for-the-badge
+[license-url]: https://github.com/TuWeile/ResuME/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/tuweile/
 [product-screenshot]: resources/resuME-intro.gif
